@@ -1,5 +1,9 @@
-﻿#!/usr/bin/Rscript
+#!/usr/bin/Rscript
+
+
 source("https://bioconductor.org/biocLite.R")
+biocLite()# Installation bioclite
+biocLite("KEGGREST")# installation keggrest?
 library("KEGGREST")
 
 showUsageInformation <- function()
@@ -26,8 +30,8 @@ infoFromPathway <- function(strPWNAME){
   # zodat de pathwaynaam als kolom meegegeven kan worden.
   # Het bestand wordt opgeslagen als csv bestand.
   lstPathwayInfo <- keggGet(strPWNAME)
-  strPathwayName <- lstPathway[[1]]$NAME
-  strGeneIDs <- lstPathway[[1]]$GENE[c(TRUE, FALSE)]
+  strPathwayName <- lstPathwayInfo[[1]]$NAME
+  strGeneIDs <- lstPathwayInfo[[1]]$GENE[c(TRUE, FALSE)]
   dfGenes <- as.data.frame.character(strGeneIDs)
   colnames(dfGenes) <- strPathwayName
   write.table(dfGenes[1], "PathwayInfo.csv", row.names=FALSE)
