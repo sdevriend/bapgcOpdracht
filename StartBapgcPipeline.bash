@@ -1,4 +1,4 @@
-﻿#!/bin/bash
+#!/bin/bash
 
 # Additional information:
 # =======================
@@ -30,10 +30,13 @@ fi
 #clear directories
 rm -rf ﻿outputfiles
 rm -rf temp
+sleep 1
 #create new directories
 mkdir outputfiles
+sleep 1
 mkdir temp
-outdir=pwd"/temp"
+outdir="$(pwd | awk '{ print $0 "/outputfiles"}')"
+outdir=
 echo ${outdir}
 opties="hsa04916 hsa00500"
 select optie in ${opties}
