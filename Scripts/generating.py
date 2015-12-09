@@ -38,16 +38,10 @@ def main_function():
     
     if (argdict["ss"] == "FP"):
         texfile = front_page(argdict)
-    with open('firstpage.tex','w') as f:
-        pass
     writefile(texfile)
-    execute()
 def writefile(texfile):
-    with open('firstpage.tex','a') as f:
+    with open('output.tex','a') as f:
         f.write(texfile)
-
-def execute():
-    os.system('pdflatex firstpage.tex')
 
 
 if __name__ == "__main__":
