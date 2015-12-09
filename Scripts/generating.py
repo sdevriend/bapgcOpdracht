@@ -2,11 +2,17 @@ import argparse
 import subprocess
 import os
 import datetime
-firstpage=r'''\documentclass{article}
+firstpage=r'''
+
+\documentclass{article}
+\usepackage{graphicx}
 \begin{document}
 \textbf{\Huge %(title)s \\}
 \vspace{1cm}
+\includegraphics[height=10cm, width=10cm]{Pathwayimage}
+\vspace{2cm}
 \textbf{\large %(name)s \\}
+\vspace{1cm}
 \textbf{\normalsize %(student_num)s \\}
 \textbf{\normalsize %(month)s \\}
 \end{document}
@@ -16,7 +22,6 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-num','--student_num')
 parser.add_argument('-n','--name')
 parser.add_argument('-t','--title')
-parser.add_argument('-s','--school', default="Hogeschool Leiden")
 parser.add_argument("ss")
 
 args=parser.parse_args()
