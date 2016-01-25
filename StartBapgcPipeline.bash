@@ -26,9 +26,9 @@ then
 	echo "./StartBapgcPipeline.bash" 
 	exit
 fi
-
+sleep 5
 #clear directories
-rm -rf ﻿outputfiles
+rm -rf outputfiles
 rm -rf temp
 sleep 1
 #create new directories
