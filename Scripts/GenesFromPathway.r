@@ -30,7 +30,7 @@ infoFromPathway <- function(strPWNAME){
   lstPathwayInfo <- keggGet(strPWNAME)
   strPathwayName <- lstPathwayInfo[[1]]$NAME
   strGeneIDs <- lstPathwayInfo[[1]]$GENE[c(TRUE, FALSE)]
-  png <- lstPathwayInfo[[1]]$IMAGE
+  png <- keggGet("hsa04920", strPWNAME)
   
   dfGenes <- as.data.frame.character(strGeneIDs)
   colnames(dfGenes) <- strPathwayName
