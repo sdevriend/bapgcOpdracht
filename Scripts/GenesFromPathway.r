@@ -30,12 +30,12 @@ infoFromPathway <- function(strPWNAME){
   lstPathwayInfo <- keggGet(strPWNAME)
   strPathwayName <- lstPathwayInfo[[1]]$NAME
   strGeneIDs <- lstPathwayInfo[[1]]$GENE[c(TRUE, FALSE)]
-  png <- keggGet("hsa04920", strPWNAME)
-  
+  png <- keggGet(strPWNAME, "image")
+ 
   dfGenes <- as.data.frame.character(strGeneIDs)
   colnames(dfGenes) <- strPathwayName
   write.table(dfGenes[1], "PathwayInfo.csv", row.names=FALSE)
-  writePNG(png,"test.png")
+  writePNG(png, paste(strPWNAME, ".png", sep=""))
 }
 
 main <- function(args)
