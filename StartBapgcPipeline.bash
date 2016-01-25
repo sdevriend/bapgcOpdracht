@@ -36,9 +36,9 @@ mkdir outputfiles
 sleep 1
 mkdir temp
 outdir="$(pwd | awk '{ print $0 "/outputfiles"}')"
-outdir=
-echo ${outdir}
+tempdir="$(pwd | awk '{ print $0 "/temp"}')"
 opties="hsa04916 hsa00500 hsa00480 hsa04722 hsa00980 hsa04920" # Vul hier je pathways in.
+echo "Welke pathway wil je analyseren?"
 select optie in ${opties}
 	do
 		if [ "${REPLY}" = '1' ] || [ "${REPLY}" = '2' ] || [ "${REPLY}" = '3' ] || [ "${REPLY}" = '4' ] || [ "${REPLY}" = '5' ] || [ "${REPLY}" = '6' ]
@@ -52,14 +52,17 @@ select optie in ${opties}
 	done
 PW=${REPLY}
 JN="j n"
+echo "Wil je de benodigde packages downloaden?"
 select ant in ${JN}
     do
 	if [ "${REPLY,,}" = 'j' ] || [ "${REPLY,,}" = 'n' ]
+	
 	then
+	    Packages="${REPLY,,}"
 		break
 	fi
 		
     done
 
-echo ${REPLY}
-sh ./Scripts/BAPGC-Pipeline.sh
+
+sh ./Scripts/BAPGC-Pipeline.sh ${outdir} ${tempdir} ${Packages} ${PW}
