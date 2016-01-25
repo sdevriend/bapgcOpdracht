@@ -1,19 +1,20 @@
 #!/usr/bin/Rscript
 
 
-source("https://bioconductor.org/biocLite.R")
-biocLite()# Installation bioclite
-biocLite("KEGGREST")# installation keggrest?
+
+
 library("KEGGREST")
+library("png")
+
 
 showUsageInformation <- function()
 {
   print("") 
+  print("Het script kan aangeroepen worden door GenesFromPathway WorkingDir pathwaynaam.")
   print("Het script download informatie van een pathway.")
   print("De informatie wordt in een csv file gezet met naam pathway")
   print(" en de genen die op een pathway zitten.")
   print("")
-  print("Het script kan aangeroepen worden door GenesFromPathway pathwaynaam.")
   print("")
   quit()
 }
@@ -35,6 +36,14 @@ infoFromPathway <- function(strPWNAME){
   dfGenes <- as.data.frame.character(strGeneIDs)
   colnames(dfGenes) <- strPathwayName
   write.table(dfGenes[1], "PathwayInfo.csv", row.names=FALSE)
+  
+}
+
+imageFromPathway <- function(strPWNAME){
+  png<- keggGet(strPWNAME, "image")
+  writePNG(png,"Pathwayimage.png")
+  
+  
 }
 
 main <- function(args)
@@ -47,12 +56,15 @@ main <- function(args)
     }
     else
     {
-      infoFromPathway(args[1])
+      setwd(args[1])
+      infoFromPathway(args[2])
+      imageFromPathway(args[2])
     }
   }
   else
   {
     infoFromPathway("hsa04916") #test var
+    imageFromPathway("hsa04916") # test var
   }
   
 }
