@@ -50,14 +50,16 @@ select optie in ${opties}
 			echo ${opties}
 		fi
 	done
-PW = ${REPLY}
-JN = "j n"
+PW=${REPLY}
+JN="j n"
 select ant in ${JN}
     do
 	if [ "${REPLY,,}" = 'j' ] || [ "${REPLY,,}" = 'n' ]
 	then
 		break
+	fi
 		
-done
+    done
+
 echo ${REPLY}
 sh ./Scripts/BAPGC-Pipeline.sh
