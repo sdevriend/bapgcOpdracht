@@ -38,10 +38,10 @@ mkdir temp
 outdir="$(pwd | awk '{ print $0 "/outputfiles"}')"
 outdir=
 echo ${outdir}
-opties="hsa04916 hsa00500"
+opties="hsa04916 hsa00500 hsa00480 hsa04722 hsa00980 hsa04920" # Vul hier je pathways in.
 select optie in ${opties}
 	do
-		if [ "${REPLY}" = '1' ] || [ "${REPLY}" = '2' ]
+		if [ "${REPLY}" = '1' ] || [ "${REPLY}" = '2' ] || [ "${REPLY}" = '3' ] || [ "${REPLY}" = '4' ] || [ "${REPLY}" = '5' ] || [ "${REPLY}" = '6' ]
 		then
 			break
 		else
@@ -50,4 +50,4 @@ select optie in ${opties}
 			echo ${opties}
 		fi
 	done
-sh ./BGSE-NGS-Pipeline.sh
+sh ./Scripts/BAPGC-Pipeline.sh
