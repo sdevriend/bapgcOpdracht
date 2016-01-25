@@ -48,7 +48,8 @@ main <- function(args)
     }
     else
     {
-      infoFromPathway(args[1])
+      setwd(args[1])
+      infoFromPathway(args[2])
     }
   }
   else
