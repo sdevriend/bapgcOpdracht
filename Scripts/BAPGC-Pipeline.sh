@@ -4,11 +4,13 @@ ResultDir=$1
 TempDir=$2
 PackageBool=$3
 Pathway=$4
-
+cd Scripts/
+pwd
 if [ "${PackageBool}" = 'j' ]
 then
-    ./DownloadRPackages.R
-    echo "Klaar met downloaden
+    echo "Root permissie is nodig voor package installatie."
+    sudo ./DownloadRPackages.R
+    echo "Klaar met downloaden"
 fi
 
 echo "Klaar met script"
