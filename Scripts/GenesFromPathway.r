@@ -1,9 +1,6 @@
 #!/usr/bin/Rscript
 
 
-source("https://bioconductor.org/biocLite.R")
-biocLite()# Installation bioclite
-biocLite("KEGGREST")# installation keggrest?
 library("KEGGREST")
 
 showUsageInformation <- function()
