@@ -12,5 +12,6 @@ then
     sudo ./DownloadRPackages.R
     echo "Klaar met downloaden"
 fi
-
+echo "Ophalen Pathway info van kegg."
+./GenesFromPathway.r ${TempDir} ${Pathway}
 echo "Klaar met script"
