@@ -26,11 +26,11 @@ then
 	echo "./StartBapgcPipeline.bash" 
 	exit
 fi
-sleep 5
+
 #clear directories
 rm -rf outputfiles
 rm -rf temp
-sleep 1
+
 #create new directories
 mkdir outputfiles
 sleep 1
@@ -50,4 +50,14 @@ select optie in ${opties}
 			echo ${opties}
 		fi
 	done
+PW = ${REPLY}
+JN = "j n"
+select ant in ${JN}
+    do
+	if [ "${REPLY,,}" = 'j' ] || [ "${REPLY,,}" = 'n' ]
+	then
+		break
+		
+done
+echo ${REPLY}
 sh ./Scripts/BAPGC-Pipeline.sh
