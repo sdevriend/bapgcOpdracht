@@ -62,7 +62,6 @@ main <- function(args)
     }
     else
     {
-      print(args[1])
       setwd(args[1])
       getPromotorSequences()
     }
