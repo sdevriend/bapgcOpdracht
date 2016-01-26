@@ -38,6 +38,7 @@ getMotifsFromPromoterSeqs <- function(){
   
   # Haalt de namen van de gevonden motifs uit het dataframe
   foundMotifs <- getMotifs(dfSequences)
+  write.csv(foundMotifs, "FoundMotifs.csv")
 }
 
 getMotifs <- function(dfMotifs){
