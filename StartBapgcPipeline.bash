@@ -57,10 +57,10 @@ select ant in ${JN}
 outdir="$(pwd | awk '{ print $0 "/outputfiles"}')"${PW}
 tempdir="$(pwd | awk '{ print $0 "/temp"}')"${PW}
 #clear directories
-rm -rf outputfiles
-rm -rf temp
+rm -rf ${outdir}
+rm -rf ${tempdir}
 #create new directories
-mkdir outputfiles
-mkdir temp
+mkdir ${outdir}
+mkdir ${tempdir}
 # Starten pipeline.
 sh ./Scripts/BAPGC-Pipeline.sh ${outdir} ${tempdir} ${Packages} ${PW}

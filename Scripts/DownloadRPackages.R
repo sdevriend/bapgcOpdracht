@@ -14,6 +14,7 @@ installdata <- function(){
   biocLite("GenomicRanges")
   biocLite("BSgenome.Hsapiens.UCSC.hg38")
   biocLite("org.Hs.eg.db")
+  biocLite("TxDb.Hsapiens.UCSC.hg38.knownGene")
 }
 
 
