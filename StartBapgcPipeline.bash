@@ -27,24 +27,19 @@ then
 	exit
 fi
 
-#clear directories
-
-
-#create new directories
-
-
+# Opties voor pathways.
 opties="hsa04916 hsa00500 hsa00480 hsa04722 hsa00980 hsa04920 hsa00360" # Vul hier je pathways in.
 echo "Welke pathway wil je analyseren?"
 select optie in ${opties}
 	do
-		if [ "${REPLY}" = '1' ] || [ "${REPLY}" = '2' ] || [ "${REPLY}" = '3' ] || [ "${REPLY}" = '4' ] || [ "${REPLY}" = '5' ] || [ "${REPLY}" = '6' ]
+	if [ "${REPLY}" = '1' ] || [ "${REPLY}" = '2' ] || [ "${REPLY}" = '3' ] || [ "${REPLY}" = '4' ] || [ "${REPLY}" = '5' ] || [ "${REPLY}" = '6' ]
 		then
 			break
 		else
 			echo "Ongeldige keuze opgegeven. Voer een 1 in voor zoeken, voor een 2 in voor de analyse en 3 om te stoppen."
 			echo "Voer je keuze in: "
 			echo ${opties}
-		fi
+	fi
 	done
 PW=${optie}
 JN="j n"
@@ -56,15 +51,16 @@ select ant in ${JN}
 	then
 	    Packages="${REPLY,,}"
 		break
-	fi
-		
+	fi	
     done
+# Declaratie directory files.
 outdir="$(pwd | awk '{ print $0 "/outputfiles"}')"${PW}
 tempdir="$(pwd | awk '{ print $0 "/temp"}')"${PW}
+#clear directories
 rm -rf outputfiles
 rm -rf temp
+#create new directories
 mkdir outputfiles
-
 mkdir temp
-
+# Starten pipeline.
 sh ./Scripts/BAPGC-Pipeline.sh ${outdir} ${tempdir} ${Packages} ${PW}
