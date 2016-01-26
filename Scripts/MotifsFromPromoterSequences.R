@@ -1,8 +1,5 @@
 #!/usr/bin/Rscript
 
-
-source("https://bioconductor.org/biocLite.R")
-biocLite()# Installation bioclite
 library(JASPAR2014)
 library(TFBSTools)
 library(Biostrings)
@@ -21,7 +18,7 @@ showUsageInformation <- function()
 getMotifsFromPromoterSeqs <- function(){
   # Maakt de parameters voor de volgende stap
   opts = list()
-  opts[["species"]] <- 9606
+  opts[["species"]] <- 9606 
   opts[["matrixtype"]] <- "PWM"
   
   # Maakt motifList m.b.v JASPAR2014. De opties voor mens en PWM worden
@@ -29,6 +26,7 @@ getMotifsFromPromoterSeqs <- function(){
   motifList <- getMatrixSet(JASPAR2014, opts)
   
   # De motifs worden in de promotorsequenties opgezocht
+  load("promoseqs.RData")
   seqs1 <- unlist(promoseqs)
   # De genen worden langs de motiflijst gehaald. Threshold 80%
   sequences<- searchSeq(motifList, seqs1, min.score="80%") # DUURT LANG!
@@ -68,13 +66,9 @@ main <- function(args)
     }
     else
     {
-      print ("NOT FINISHED! DO NOT EXECUTE!")
-      infoFromPathway()
+      setwd(args[1])
+      getMotifsFromPromoterSeqs()
     }
-  }
-  else
-  {
-    infoFromPathway() #test var
   }
   
 }
