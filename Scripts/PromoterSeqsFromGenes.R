@@ -1,8 +1,8 @@
 #!/usr/bin/Rscript
-
-
+setwd("C:/Users/jesse/Documents/Bio-informatica/Jaar 3/Periode 2/Bapgc/")
 # Global variables and libraries
-
+biocLite("GenomicRanges")
+biocLite("BSgenome.Hsapiens.UCSC.hg38")
 
 library(GenomicRanges)
 library(BSgenome.Hsapiens.UCSC.hg38)
@@ -13,7 +13,6 @@ showUsageInformation <- function()
   print("Dit script geeft als output een bestand met alle 
         promotorsequenties voor een lijst met alle promotorsequenties 
         van een lijst met genen als input.")
-  print("Roep het script aan met: PromoterSeqFromGenes.R Dirnaam")
   quit()
 }
 
@@ -22,7 +21,7 @@ getPromotorSequences <- function()
   # Gebruikte libraries:
   library(Biostrings)
   library(org.Hs.eg.db)
-  library(BSgenome.Hsapiens.UCSC.hg38)
+  library (BSgenome.Hsapiens.UCSC.hg38)
   library(TxDb.Hsapiens.UCSC.hg38.knownGene)
   
   # Gene Database (HG38)
@@ -62,11 +61,13 @@ main <- function(args)
     }
     else
     {
-      setwd(args[1])
-      getPromotorSequences()
+      infoFromPathway(args[1])
     }
   }
-  
+  else
+  {
+    getPromotorSequences()
+  }
   
 }
 
