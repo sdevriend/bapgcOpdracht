@@ -11,7 +11,8 @@ showUsageInformation <- function()
   print("De informatie wordt in een csv file gezet met naam pathway")
   print(" en de genen die op een pathway zitten.")
   print("")
-  print("Het script kan aangeroepen worden door GenesFromPathway pathwaynaam.")
+  print("Het script kan aangeroepen worden door:")
+  print("\t GenesFromPathway WorkingDir pathwaynaam.")
   print("")
   quit()
 }
@@ -27,11 +28,12 @@ infoFromPathway <- function(strPWNAME){
   # Na het omzetten van de geneid's worden deze in een dataframe gestopt
   # zodat de pathwaynaam als kolom meegegeven kan worden.
   # Het bestand wordt opgeslagen als csv bestand.
+  # Daarnaast haalt de functie ook een png image
+  # op  en slaat deze op and .png
   lstPathwayInfo <- keggGet(strPWNAME)
   strPathwayName <- lstPathwayInfo[[1]]$NAME
   strGeneIDs <- lstPathwayInfo[[1]]$GENE[c(TRUE, FALSE)]
   png <- keggGet(strPWNAME, "image")
- 
   dfGenes <- as.data.frame.character(strGeneIDs)
   colnames(dfGenes) <- strPathwayName
   write.table(dfGenes[1], "PathwayInfo.csv", row.names=FALSE)
