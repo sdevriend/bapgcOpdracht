@@ -11,15 +11,13 @@ installdata <- function(){
   source("https://bioconductor.org/biocLite.R")
   biocLite()# Installation bioclite
   biocLite("KEGGREST")# installation keggrest?
-<<<<<<< HEAD
   biocLite("GenomicRanges")
   biocLite("BSgenome.Hsapiens.UCSC.hg38")
   biocLite("org.Hs.eg.db")
   biocLite("TxDb.Hsapiens.UCSC.hg38.knownGene")
   biocLite("JASPAR2014")
   biocLite("TFBSTools")
-=======
->>>>>>> c8ca72820c213caac36a10cdbb835be0dd650c7d
+
 }
 
 
