@@ -47,7 +47,7 @@ select optie in ${opties}
 			echo ${opties}
 		fi
 	done
-PW=${REPLY}
+PW=${optie}
 JN="j n"
 echo "Wil je de benodigde packages downloaden?"
 select ant in ${JN}
