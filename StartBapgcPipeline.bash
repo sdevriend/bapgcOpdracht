@@ -28,16 +28,13 @@ then
 fi
 
 #clear directories
-rm -rf outputfiles
-rm -rf temp
+
 
 #create new directories
-mkdir outputfiles
-sleep 1
-mkdir temp
+
 outdir="$(pwd | awk '{ print $0 "/outputfiles"}')"
 tempdir="$(pwd | awk '{ print $0 "/temp"}')"
-opties="hsa04916 hsa00500 hsa00480 hsa04722 hsa00980 hsa04920" # Vul hier je pathways in.
+opties="hsa04916 hsa00500 hsa00480 hsa04722 hsa00980 hsa04920 hsa00360" # Vul hier je pathways in.
 echo "Welke pathway wil je analyseren?"
 select optie in ${opties}
 	do
@@ -63,6 +60,10 @@ select ant in ${JN}
 	fi
 		
     done
+rm -rf outputfiles${PW}
+rm -rf temp${PW}
+mkdir outputfiles${PW}
 
+mkdir temp${PW}
 
 sh ./Scripts/BAPGC-Pipeline.sh ${outdir} ${tempdir} ${Packages} ${PW}
