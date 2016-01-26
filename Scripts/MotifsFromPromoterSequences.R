@@ -30,13 +30,32 @@ getMotifsFromPromoterSeqs <- function(){
   
   # De motifs worden in de promotorsequenties opgezocht
   seqs1 <- unlist(promoseqs)
-  test<- searchSeq(motifList, seqs1, min.score="90%") # DUURT LANG!
-  ?searchSeq
-  # Schrijft tussenstap weg naar csv file
-  write.table(test, "MotifsFromPromoterSeqs.csv", row.names=FALSE)
-  dfTest <- as(test, "DataFrame") # DUURT LANG!
-  write.table(dfTest, "Boekenlegger-25-1.csv", row.names=FALSE)
+  # De genen worden langs de motiflijst gehaald. Threshold 80%
+  sequences<- searchSeq(motifList, seqs1, min.score="80%") # DUURT LANG!
+
+  # Maakt een dataframe van de searchSeq output
+  dfSequences <- as(sequences, "DataFrame") # DUURT LANG!
+  
+  # Haalt de namen van de gevonden motifs uit het dataframe
+  foundMotifs <- getMotifs(dfSequences)
 }
+
+getMotifs <- function(dfMotifs){
+  found = c()
+  # De motifs die een relatieve score van 95% hebben en voor ieder gen gelden
+  # Worden opgeslagen in een vector. Deze wordt teruggegeven.
+  for (i in seq(1, (length(unique(dfMotifs$ID))))){
+    setMotifs <- subset(dfMotifs, ID==(unique(dfMotifs$ID)[i]) & relScore > 0.95)
+    uniek <- unique(setMotifs$seqnames)
+    if (length(uniek) == 17){
+      found[[i]] <- (unique(dfMotifs$ID)[i])
+      
+    }
+  }
+  found <- found[!is.na(found)]
+  return(found)
+}
+
 
 main <- function(args)
 {
