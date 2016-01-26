@@ -62,7 +62,9 @@ main <- function(args)
     }
     else
     {
-      infoFromPathway(args[1])
+      setwd(args[1])
+      getPromotorSequences()
+
     }
   }
   else
