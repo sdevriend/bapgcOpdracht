@@ -13,6 +13,7 @@ installdata <- function(){
   biocLite("KEGGREST")# installation keggrest?
   biocLite("GenomicRanges")
   biocLite("BSgenome.Hsapiens.UCSC.hg38")
+  biocLite("org.Hs.eg.db")
 }
 
 
