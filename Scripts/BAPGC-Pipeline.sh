@@ -1,5 +1,12 @@
 #!/bin/bash
-
+if [ "$1" = "--h" ] || [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "-help" ]
+then
+    echo ""
+	echo "DOCUMENTATIE GEHAALD."
+	echo "" 
+	
+    exit
+fi
 ResultDir=$1
 TempDir=$2
 PackageBool=$3
@@ -14,4 +21,7 @@ then
 fi
 echo "Ophalen Pathway info van kegg."
 ./GenesFromPathway.r ${TempDir} ${Pathway}
+echo "Ophalen pathway informatie is klaar."
+echo "Starten promoter script."
+./PromoterSeqsFromGenes.R ${TempDir}
 echo "Klaar met script"

@@ -45,10 +45,16 @@ getPromotorSequences <- function()
   
   # De promotersequenties worden opgehaald met 3000 upstream 300 
   promoseqs  = getPromoterSeq(transcripts.grL, genome, upstream=3000, downstream = 300)
-  
+  # Schrijf naar rdata file.
+  save(promoseqs, "promoseqs.RData")
   # Schrijf de sequenties naar een csv bestand (als tussenproduct)
+<<<<<<< HEAD
   write.table(promoseqs, "PromoterSequences.csv", row.names=FALSE)
   return(promoseqs)
+=======
+  #write.table(promoseqs, "PromoterSequences.csv", row.names=FALSE)
+  
+>>>>>>> origin/master
   }	        
 
 main <- function(args)
@@ -61,7 +67,9 @@ main <- function(args)
     }
     else
     {
-      infoFromPathway(args[1])
+      setwd(args[1])
+      getPromotorSequences()
+
     }
   }
   else
