@@ -54,7 +54,7 @@ main <- function(args)
   }
   else
   {
-    infoFromPathway("hsa04630") #test var
+    infoFromPathway("hsa00360") #test var
   }
   
 }

@@ -48,7 +48,7 @@ getPromotorSequences <- function()
   
   # Schrijf de sequenties naar een csv bestand (als tussenproduct)
   write.table(promoseqs, "PromoterSequences.csv", row.names=FALSE)
-  
+  return(promoseqs)
   }	        
 
 main <- function(args)
@@ -66,7 +66,7 @@ main <- function(args)
   }
   else
   {
-    getPromotorSequences()
+   promoseqs <- getPromotorSequences()
   }
   
 }
