@@ -14,7 +14,7 @@ showUsageInformation <- function()
 
 
 setMotifOnGenome <- function(){
-  genome <- BSgenome.Hsapiens.UCSC.hg38
+  
   
   lstMatchPos <- list(c(1, 2500), c(2501,5000), c(5001, 7500), c(7501, 10000),
 				      c(10001, 12500), c(12501, 15000), c(15001, 17500), 
@@ -71,6 +71,7 @@ setMotifOnGenome <- function(){
 }
 
 getMatches <- function(left, right){
+  genome <- BSgenome.Hsapiens.UCSC.hg38
   Txdb<- TxDb.Hsapiens.UCSC.hg38.knownGene
   allGenes <- genes(Txdb)
   allTranscripts <- transcriptsBy(Txdb, by="gene")[allGenes$gene_id]
