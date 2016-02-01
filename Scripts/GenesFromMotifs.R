@@ -71,6 +71,8 @@ setMotifOnGenome <- function(){
 }
 
 getMatches <- function(left, right){
+  foundMotifsTable <- read.csv("FoundMotifs.csv")
+  foundMotifs <- foundMotifsTable$x
   genome <- BSgenome.Hsapiens.UCSC.hg38
   Txdb<- TxDb.Hsapiens.UCSC.hg38.knownGene
   allGenes <- genes(Txdb)
