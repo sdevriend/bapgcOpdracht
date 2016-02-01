@@ -3,6 +3,8 @@ library(GenomicRanges)
 library(BSgenome.Hsapiens.UCSC.hg38)
 library(TxDb.Hsapiens.UCSC.hg38.knownGene)
 library(JASPAR2014)
+library(TFBSTools)
+library(Biostrings)
 
 showUsageInformation <- function()
 {
