@@ -16,7 +16,7 @@ installdata <- function(){
   biocLite("org.Hs.eg.db")
   biocLite("TxDb.Hsapiens.UCSC.hg38.knownGene")
   biocLite("JASPAR2014")
-  biocLite("gsl") # nodig voor TFBSTOOLS?
+  #biocLite("gsl") # nodig voor TFBSTOOLS?
   biocLite("TFBSTools")
 
 
