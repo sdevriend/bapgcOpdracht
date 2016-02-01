@@ -18,6 +18,9 @@ installdata <- function(){
   biocLite("JASPAR2014")
   #biocLite("gsl") # nodig voor TFBSTOOLS?
   biocLite("TFBSTools")
+  install.packages("foreach")
+  install.packages("doParallel")
+  install.packages("plyr")
 
 
 }
