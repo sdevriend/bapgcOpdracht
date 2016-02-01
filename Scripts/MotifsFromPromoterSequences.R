@@ -26,9 +26,8 @@ getMotifsFromPromoterSeqs <- function(){
   motifList <- getMatrixSet(JASPAR2014, opts)
   
   # De motifs worden in de promotorsequenties opgezocht
-  promoSeqs <- read.table("PromoterSequences.csv")
-  promoSeqs <- promoSeqs[-1,]
-  amount <- length(unique(promoSeqs$V1))
+  load("promoseqs.RData")
+  amount <- length(promoseqs)
   seqs1 <- unlist(promoseqs)
   # De genen worden langs de motiflijst gehaald. Threshold 80%
   sequences<- searchSeq(motifList, seqs1, min.score="80%") # DUURT LANG!
