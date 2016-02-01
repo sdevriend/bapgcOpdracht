@@ -15,9 +15,7 @@ showUsageInformation <- function()
 
 setMotifOnGenome <- function(){
   genome <- BSgenome.Hsapiens.UCSC.hg38
-  Txdb<- TxDb.Hsapiens.UCSC.hg38.knownGene
-  allGenes <- genes(Txdb)
-  allTranscripts <- transcriptsBy(Txdb, by="gene")[allGenes$gene_id]
+  
   lstMatchPos <- list(c(1, 2500), c(2501,5000), c(5001, 7500), c(7501, 10000),
 				      c(10001, 12500), c(12501, 15000), c(15001, 17500), 
 				      c(17501, 20000), c(20001, 22500), c(22501, 23779))
@@ -73,6 +71,9 @@ setMotifOnGenome <- function(){
 }
 
 getMatches <- function(left, right){
+  Txdb<- TxDb.Hsapiens.UCSC.hg38.knownGene
+  allGenes <- genes(Txdb)
+  allTranscripts <- transcriptsBy(Txdb, by="gene")[allGenes$gene_id]
   Transcripts <- allTranscripts[IRanges(start=left, end=right)]
   PromoterSeqs <- getPromoterSeq(Transcripts, genome, 3000, 100)
   opts = list()
