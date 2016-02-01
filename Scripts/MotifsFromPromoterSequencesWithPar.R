@@ -32,7 +32,7 @@ getMotifsFromPromoterSeqs <- function(){
   promoSeqs <- read.table("PromoterSequences.csv")
   promoSeqs <- promoSeqs[-1,]
   amount <- length(unique(promoSeqs$V1))
-  seqs1 <- unlist(promoseqs)
+  seqs1 <- unlist(promoSeqs)
   # De genen worden langs de motiflijst gehaald. Threshold 80%
   cl<-makeCluster(6)
   registerDoParallel(cl)
