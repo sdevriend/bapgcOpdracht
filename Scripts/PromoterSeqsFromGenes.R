@@ -44,9 +44,9 @@ getPromotorSequences <- function()
   # De promotersequenties worden opgehaald met 3000 upstream 300 
   promoseqs  = getPromoterSeq(transcripts.grL, genome, upstream=3000, downstream = 300)
   # Schrijf naar rdata file.
-  #save(promoseqs, file="promoseqs.RData")
+  save(promoseqs, file="promoseqs.RData")
   # Schrijf de sequenties naar een csv bestand (als tussenproduct)
-  write.table(promoseqs, "PromoterSequences.csv", row.names=FALSE)
+  #write.table(promoseqs, "PromoterSequences.csv", row.names=FALSE)
   #return(promoseqs)
 
   }	        

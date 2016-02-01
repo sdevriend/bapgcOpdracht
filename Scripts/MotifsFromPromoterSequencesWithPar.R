@@ -29,10 +29,11 @@ getMotifsFromPromoterSeqs <- function(){
   motifList <- getMatrixSet(JASPAR2014, opts)
   
   # De motifs worden in de promotorsequenties opgezocht
-  promoSeqs <- read.table("PromoterSequences.csv")
-  promoSeqs <- promoSeqs[-1,]
-  amount <- length(unique(promoSeqs$V1))
-  seqs1 <- unlist(promoSeqs)
+  #promoSeqs <- read.table("PromoterSequences.csv")
+  #promoSeqs <- promoSeqs[-1,]
+  load("promoseqs.RData")
+  amount <- length(promoseqs)
+  seqs1 <- unlist(promoseqs)
   # De genen worden langs de motiflijst gehaald. Threshold 80%
   cl<-makeCluster(6)
   registerDoParallel(cl)
