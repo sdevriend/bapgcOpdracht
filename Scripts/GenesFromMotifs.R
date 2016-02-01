@@ -9,48 +9,48 @@ allTranscripts <- transcriptsBy(Txdb, by="gene")[allGenes$gene_id]
 
 foundMotifsTable <- read.csv("FoundMotifs.csv")
 foundMotifs <- foundMotifsTable$x
-
+amount <- length(foundMotifs)
 dfTenth1 <- getMatches(1, 2500)
 save(dfTenth1, file='motifspart1.RDATA')
 load('motifspart1.RDATA')
-geneset11 <- getGenes(dfTenth1)
+geneset11 <- getGenes(dfTenth1, amount)
 
 dfTenth2 <- getMatches(2501,5000)
 save(dfTenth2, file='motifspart2.RDATA')
 load('motifspart2.RDATA')
-geneset12 <- getGenes(dfTenth2)
+geneset12 <- getGenes(dfTenth2, amount)
 
 dfTenth3 <- getMatches(5001, 7500)
 save(dfTenth3, file='motifspart3.RDATA')
-geneset3 <- getGenes(dfTenth3)
+geneset3 <- getGenes(dfTenth3, amount)
 
 dfTenth4 <- getMatches(7501, 10000)
 save(dfTenth4, file='motifspart4.RDATA')
-geneset4 <- getGenes(dfTenth4)
+geneset4 <- getGenes(dfTenth4, amount)
 
 dfTenth5 <- getMatches(10001, 12500)
 save(dfTenth5, file='motifspart5.RDATA')
-geneset5 <- getGenes(dfTenth5)
+geneset5 <- getGenes(dfTenth5, amount)
 
 dfTenth6 <- getMatches(12501, 15000)
 save(dfTenth6, file='motifspart6.RDATA')
-geneset6 <- getGenes(dfTenth6)
+geneset6 <- getGenes(dfTenth6, amount)
 
 dfTenth7 <- getMatches(15001, 17500)
 save(dfTenth7, file='motifspart7.RDATA')
-geneset7 <- getGenes(dfTenth7)
+geneset7 <- getGenes(dfTenth7, amount)
 
 dfTenth8 <- getMatches(17501, 20000)
 save(dfTenth8, file='motifspart8.RDATA')
-geneset8 <- getGenes(dfTenth8)
+geneset8 <- getGenes(dfTenth8, amount)
 
 dfTenth9 <- getMatches(20001, 22500)
 save(dfTenth9, file='motifspart9.RDATA')
-geneset9 <- getGenes(dfTenth9)
+geneset9 <- getGenes(dfTenth9, amount)
 
 dfTenth10 <- getMatches(22501, 23779)
 save(dfTenth10, file='motifspart10.RDATA')
-geneset10 <- getGenes(dfTenth10)
+geneset10 <- getGenes(dfTenth10, amount)
 
 fullFrame <- data.frame(c(geneset1,geneset10, geneset2, geneset3, 
                           geneset4, geneset5, geneset6, geneset7, geneset8, geneset9))
@@ -70,14 +70,14 @@ getMatches <- function(left, right){
   AllSSeqs <- searchSeq(motifListSubSet, unlist(PromoterSeqs), min.score="80%")
   dfSseqs<- as(AllSSeqs, "DataFrame")
   return(dfSseqs)
-}
+  }
 
-getGenes <- function(dfMotifs){
+getGenes <- function(dfMotifs, amount){
   found <- c()
   for (i in seq(1, (length(unique(dfMotifs$seqnames))))){
     setMotifs <- subset(dfMotifs, seqnames==(unique(dfMotifs$seqnames)[i]) & relScore > 0.97)
     uniek <- unique(setMotifs$ID)
-    if (length(uniek) == 8){
+    if (length(uniek) == amount){
       found[[i]] <- (unique(dfMotifs$seqnames)[i])
       found <- found[!is.na(found)]
       

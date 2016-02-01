@@ -26,7 +26,9 @@ getMotifsFromPromoterSeqs <- function(){
   motifList <- getMatrixSet(JASPAR2014, opts)
   
   # De motifs worden in de promotorsequenties opgezocht
-  load("promoseqs.RData")
+  promoSeqs <- read.table("PromoterSequences.csv")
+  promoSeqs <- promoSeqs[-1,]
+  amount <- length(unique(promoSeqs$V1))
   seqs1 <- unlist(promoseqs)
   # De genen worden langs de motiflijst gehaald. Threshold 80%
   sequences<- searchSeq(motifList, seqs1, min.score="80%") # DUURT LANG!
@@ -35,19 +37,19 @@ getMotifsFromPromoterSeqs <- function(){
   dfSequences <- as(sequences, "DataFrame") # DUURT LANG!
   
   # Haalt de namen van de gevonden motifs uit het dataframe
-  foundMotifs <- getMotifs(dfSequences)
+  foundMotifs <- getMotifs(dfSequences, amount)
   write.csv(foundMotifs, "FoundMotifs.csv")
   return(foundMotifs)
 }
 
-getMotifs <- function(dfMotifs){
+getMotifs <- function(dfMotifs, amount){
   found = c()
   # De motifs die een relatieve score van 95% hebben en voor ieder gen gelden
   # Worden opgeslagen in een vector. Deze wordt teruggegeven.
   for (i in seq(1, (length(unique(dfMotifs$ID))))){
     setMotifs <- subset(dfMotifs, ID==(unique(dfMotifs$ID)[i]) & relScore > 0.95)
     uniek <- unique(setMotifs$seqnames)
-    if (length(uniek) == 17){
+    if (length(uniek) == amount){
       found[[i]] <- (unique(dfMotifs$ID)[i])
       
     }
