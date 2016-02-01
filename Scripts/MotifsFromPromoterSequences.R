@@ -67,13 +67,8 @@ main <- function(args)
     }
     else
     {
-<<<<<<< HEAD
-      print ("NOT FINISHED! DO NOT EXECUTE!")
-      foundMotifs <- getMotifsFromPromoterSeqs()
-=======
       setwd(args[1])
       getMotifsFromPromoterSeqs()
->>>>>>> origin/master
     }
   }
   

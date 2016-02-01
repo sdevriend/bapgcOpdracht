@@ -1,8 +1,6 @@
 #!/usr/bin/Rscript
-setwd("C:/Users/jesse/Documents/Bio-informatica/Jaar 3/Periode 2/Bapgc/")
 # Global variables and libraries
-biocLite("GenomicRanges")
-biocLite("BSgenome.Hsapiens.UCSC.hg38")
+
 
 library(GenomicRanges)
 library(BSgenome.Hsapiens.UCSC.hg38)
@@ -48,13 +46,9 @@ getPromotorSequences <- function()
   # Schrijf naar rdata file.
   save(promoseqs, "promoseqs.RData")
   # Schrijf de sequenties naar een csv bestand (als tussenproduct)
-<<<<<<< HEAD
-  write.table(promoseqs, "PromoterSequences.csv", row.names=FALSE)
-  return(promoseqs)
-=======
   #write.table(promoseqs, "PromoterSequences.csv", row.names=FALSE)
-  
->>>>>>> origin/master
+  #return(promoseqs)
+
   }	        
 
 main <- function(args)

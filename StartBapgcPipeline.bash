@@ -32,7 +32,8 @@ opties="hsa04916 hsa00500 hsa00480 hsa04722 hsa00980 hsa04920 hsa00360" # Vul hi
 echo "Welke pathway wil je analyseren?"
 select optie in ${opties}
 	do
-	if [ "${REPLY}" = '1' ] || [ "${REPLY}" = '2' ] || [ "${REPLY}" = '3' ] || [ "${REPLY}" = '4' ] || [ "${REPLY}" = '5' ] || [ "${REPLY}" = '6' ]
+	# Deze line wordt maximaal 3, voor de verschillende pathways.
+	if [ "${REPLY}" = '1' ] || [ "${REPLY}" = '2' ] || [ "${REPLY}" = '3' ] || [ "${REPLY}" = '4' ] || [ "${REPLY}" = '5' ] || [ "${REPLY}" = '6' ] || [ "${REPLY}" = '7' ]
 		then
 			break
 		else
@@ -63,4 +64,5 @@ rm -rf ${tempdir}
 mkdir ${outdir}
 mkdir ${tempdir}
 # Starten pipeline.
-sh ./Scripts/BAPGC-Pipeline.sh ${outdir} ${tempdir} ${Packages} ${PW}
+cd Scripts/
+sh ./BAPGC-Pipeline.sh ${outdir} ${tempdir} ${Packages} ${PW}

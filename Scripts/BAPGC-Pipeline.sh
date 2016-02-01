@@ -7,12 +7,12 @@ then
 	
     exit
 fi
+# Declaratie bestanden en namen.
 ResultDir=$1
 TempDir=$2
 PackageBool=$3
 Pathway=$4
-cd Scripts/
-pwd
+# Optie om alle packages te downloaden. Hiervoor zijn root rechten nodig.
 if [ "${PackageBool}" = 'j' ]
 then
     echo "Root permissie is nodig voor package installatie."
@@ -24,4 +24,6 @@ echo "Ophalen Pathway info van kegg."
 echo "Ophalen pathway informatie is klaar."
 echo "Starten promoter script."
 ./PromoterSeqsFromGenes.R ${TempDir}
+echo "Promotor sequenties zijn gevonden. Door met motifs zoeken."
+./MotifsFromPromoterSequences.R ${TempDir}
 echo "Klaar met script"
