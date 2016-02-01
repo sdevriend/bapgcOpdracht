@@ -1,3 +1,4 @@
+#!/usr/bin/Rscript
 library(GenomicRanges)
 library(BSgenome.Hsapiens.UCSC.hg38)
 library(TxDb.Hsapiens.UCSC.hg38.knownGene)
@@ -12,7 +13,7 @@ showUsageInformation <- function()
 }
 
 
-function setMotifOnGenome(){
+setMotifOnGenome <- function(){
   genome <- BSgenome.Hsapiens.UCSC.hg38
   Txdb<- TxDb.Hsapiens.UCSC.hg38.knownGene
   allGenes <- genes(Txdb)
