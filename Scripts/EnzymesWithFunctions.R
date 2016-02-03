@@ -1,9 +1,12 @@
 source("https://bioconductor.org/biocLite.R")
 biocLite("hgu95av2.db")
 library("hgu95av2.db")
+library(limma)
+load("AllCoregulatedGenes.csv")
 
 # Neemt de honderd beste hits van een genenset (in dit geval een testvar)
-HundredBestHits <- geneset1[c(1:100)]
+HundredBestHits <- fullFrame[c(1:100),]
+geneset <- getEntrez(HundredBestHits)
 #Genereert annotaties (Entrez, Symbol, Ensembl, functie en EC-nummer)
 annotations <- getEnzymes(unlist(HundredBestHits))
 #Haalt alle annotaties met een EC-nummer op
