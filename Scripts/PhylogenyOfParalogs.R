@@ -49,7 +49,6 @@ getSequences <- function(id.names){
     black<- tryCatch({
     transcriptsBy(txdb, by="gene")[entrez.ids[i]]},
     error = function(err){
-      print(paste("Error in",entrez.ids[i]))
       return(entrez.ids[[i]])
     })
     if(class(black) != "GRangesList"){
