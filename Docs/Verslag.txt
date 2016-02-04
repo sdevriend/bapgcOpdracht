@@ -29,7 +29,7 @@ naar motifs die bij transcriptiefactoren horen. Hiervoor is een downstream regio
 en en upstream regio van 300 gebruikt. De gevonden motifs vormen samen de set
 transcriptiefactoren die de pathway reguleert. Hierna wordt het hele humane genoom
 gescand op deze motifs. De genen die elk van deze motifs bevatten, worden meegenomen
-als medegereguleerde genen. Dit zijn {X} genen.
+als medegereguleerde genen. Dit zijn {LENGTE VAN FULLFRAME VARIABELE} genen.
 
 Vijf biologische vragen zijn beantwoord met deze set genen.
 1: Er wordt onderzocht hoe veel van de beste 100 medegereguleerde genen enzymen zijn
@@ -76,3 +76,4 @@ De resultaten hiervan zijn te zien in figuur 5
 {SCATTERPLOT MET FIGUUR 5 ERONDER}
 
 -Discussie & Conclusie
+
