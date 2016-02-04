@@ -62,6 +62,9 @@ getRatios <- function(AAStringSet){
                        df.counts$W, df.counts$Y)
     hydrophilic <- sum(df.counts$D, df.counts$E, df.counts$K, df.counts$R)
     total <- sum(df.counts)
+    hydrophilic <- hydrophilic/total*100
+    hydrophobic <- hydrophobic/total*100
+    total <- 100
     dfAmounts <- rbind(dfAmounts, c(hydrophobic, hydrophilic, (total-hydrophobic-hydrophilic)))
     }
   return(dfAmounts[-1,])
