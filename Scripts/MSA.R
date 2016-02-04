@@ -47,7 +47,10 @@ MSA <- function(){
   #longest.gene <- longestGene # TESTVAR
   
   perc <- getConservedPercentage(longestGene, alignment)
-  print(perc)
+  maPerc <- as.matrix(perc)
+  colnames(maPerc) <- c(longestGene.name)
+  taWriteRes <- as.table(maPerc)
+  write.table(taWriteRes, row.names=FALSE, file="MSARESULT.txt")
 }
 getEntrez <- function(dfGenes){
   entrez <- unlist(strsplit(dfGenes, "[.]"))
