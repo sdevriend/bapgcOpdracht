@@ -19,6 +19,7 @@ installdata <- function(){
   #biocLite("gsl") # nodig voor TFBSTOOLS?
   biocLite("TFBSTools")
   biocLite("hgu95av2.db")
+  biocLite("limma")
   #install.packages("foreach")
   #install.packages("doParallel")
   #install.packages("plyr")
