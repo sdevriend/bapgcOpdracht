@@ -1,22 +1,26 @@
 #!/usr/bin/Rscript
 
+
 showUsageInformation <- function(){
   print("")
-  print("Dit script installeerd alle packages die gebruikt worden voor de bapgc opdracht.")
-  print("Hiervoor is een internet verbinding nodig.")
+  print("Dit script installeerd alle packages die gebruikt worden voor de ")
+  print("bapgc opdracht.")
+  print("Hiervoor is een internet verbinding nodig samen met root rechten.")
   quit()
 }
 
-installdata <- function(){
+installPackages <- function(){
+  # Functie download alle onderstaande packages. Dit is handig voor bij
+  # een schone installatie. De functie heeft root rechten nodig
+  # om alle files te installeren.
   source("https://bioconductor.org/biocLite.R")
-  biocLite()# Installation bioclite
-  biocLite("KEGGREST")# installation keggrest?
+  biocLite()
+  biocLite("KEGGREST")
   biocLite("GenomicRanges")
   biocLite("BSgenome.Hsapiens.UCSC.hg38")
   biocLite("org.Hs.eg.db")
   biocLite("TxDb.Hsapiens.UCSC.hg38.knownGene")
   biocLite("JASPAR2014")
-  #biocLite("gsl") # nodig voor TFBSTOOLS?
   biocLite("TFBSTools")
   biocLite("hgu95av2.db")
   biocLite("limma")
@@ -25,13 +29,7 @@ installdata <- function(){
   biocLite("seqinr")
   biocLite("ape")
   biocLite("ggtree")
-  #install.packages("foreach")
-  #install.packages("doParallel")
-  #install.packages("plyr")
-
-
 }
-
 
 main <- function(args)
 {
@@ -41,18 +39,12 @@ main <- function(args)
     {
       showUsageInformation()
     }
-    else
-    {
-      
-    }
-    
   }
   else
   {
-    installdata()
+    installPackages()
   }
 }
-
 
 main(commandArgs(T))
 # Additional information:

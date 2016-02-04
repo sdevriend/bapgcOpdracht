@@ -4,14 +4,17 @@
 library("KEGGREST")
 library("png")
 
+
 showUsageInformation <- function()
 {
   print("") 
   print("Het script download informatie van een pathway.")
   print("De informatie wordt in een csv file gezet met naam pathway")
   print(" en de genen die op een pathway zitten.")
+  print("Daarnaast haalt het script de afbeelding van de meegegeven")
+  print(" pathwaynaam op van Kegg.")
   print("")
-  print("Het script kan aangeroepen worden door GenesFromPathway pathwaynaam.")
+  print("Het script kan aangeroepen worden door ./GenesFromPathway pathwaynaam.")
   print("")
   quit()
 }
@@ -21,17 +24,20 @@ infoFromPathway <- function(strPWNAME){
   #
   # lstPathwayInfo: Pathway object van kegg
   # strPathwayName: String met pathway naam
-  # strGeneIDs: Char string. 1e element wordt genomen. 2e element wordt overgeslagen.
+  # strGeneIDs: Char string. 1e element wordt genomen. 
+  #     2e element wordt overgeslagen.
   # dfGenes: Omgezette geneid's.
+  # png: Variable met pathway afbeelding.
   #
   # Na het omzetten van de geneid's worden deze in een dataframe gestopt
   # zodat de pathwaynaam als kolom meegegeven kan worden.
   # Het bestand wordt opgeslagen als csv bestand.
+  # Daarnaast wordt de afbeelding van de pathway gedownload en
+  # opgeslagen.
   lstPathwayInfo <- keggGet(strPWNAME)
   strPathwayName <- lstPathwayInfo[[1]]$NAME
   strGeneIDs <- lstPathwayInfo[[1]]$GENE[c(TRUE, FALSE)]
   png <- keggGet(strPWNAME, "image")
- 
   dfGenes <- as.data.frame.character(strGeneIDs)
   colnames(dfGenes) <- strPathwayName
   write.table(dfGenes[1], "PathwayInfo.csv", row.names=FALSE)
@@ -52,13 +58,7 @@ main <- function(args)
       infoFromPathway(args[2])
     }
   }
-  else
-  {
-    infoFromPathway("hsa00360") #test var
-  }
-  
 }
-
 
 main(commandArgs(T))
 
@@ -69,4 +69,4 @@ main(commandArgs(T))
 # Jesse Kerkvliet
 #
 # Het script download de gegevens van een opgegven pathway
-# en zet deze in een nog default script plek.
+# en zet deze in de opgegeven directory in args 1.
