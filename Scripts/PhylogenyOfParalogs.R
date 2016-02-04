@@ -76,7 +76,7 @@ getEntrez <- function(dfGenes){
   entrez <- unique(entrez)
   return(entrez)
 }
-PhyloTree <- function(){
+
 setwd("/home/bapgc/bapgcOpdracht/temphsa04916/")
 #Gene database en genoom worden gedefinieerd
 txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
@@ -105,6 +105,10 @@ paralog.names <- unique(dfParalogs$hsapiens_paralog_ensembl_gene)
 paralog.names <- as(paralog.names, 'character')
 nameset <- c(paralog.names, names)
 sequences <- getSequences(nameset)
+for(i in seq(1, length(sequences))){
+  outname = paste(nameset[[i]],".fasta", sep="")
+  write.fasta(unlist(sequences)[[i]], names = nameset[[i]], file.out = outname)
+}
 
 
 makeTree <- function(nameset, sequences){
@@ -115,5 +119,5 @@ makeTree <- function(nameset, sequences){
 
 }
 
-tree <- makeTree(nameset, sequences)
-plot(tree)
+#tree <- makeTree(nameset, sequences)
+#plot(tree)
