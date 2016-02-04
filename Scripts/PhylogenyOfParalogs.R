@@ -77,48 +77,59 @@ getEntrez <- function(dfGenes){
   entrez <- unique(entrez)
   return(entrez)
 }
-
-setwd("/home/bapgc/bapgcOpdracht/temphsa04916/")
+getGenesforPhylo <- function(){
+#setwd("/home/bapgc/bapgcOpdracht/temphsa04916/")
 #Gene database en genoom worden gedefinieerd
-txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
-genome <- BSgenome.Hsapiens.UCSC.hg38
-load("AllCoregulatedGenes.csv")
-genes <- fullFrame[c(1:10),]
-genes <- getEntrez(genes)
+  txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
+  genome <- BSgenome.Hsapiens.UCSC.hg38
+  load("AllCoregulatedGenes.csv")
+  genes <- fullFrame[c(1:10),]
+  genes <- getEntrez(genes)
 
-g_ensembldatabase = useMart("ensembl", dataset="hsapiens_gene_ensembl")
-paralogs <- getBM(c("ensembl_gene_id", "hsapiens_paralog_ensembl_gene"),
+  g_ensembldatabase = useMart("ensembl", dataset="hsapiens_gene_ensembl")
+  paralogs <- getBM(c("ensembl_gene_id", "hsapiens_paralog_ensembl_gene"),
                   filters="entrezgene", values=genes, g_ensembldatabase)
 
 
 
 
-four.paralogs <- filterParalogs(paralogs)
-four.paralogs[four.paralogs==""] <- NA
-four.paralogs <- na.omit(four.paralogs)
-names <- (as.data.frame(four.paralogs)$ensemble_gene_id)
-dfParalogs <- as.data.frame(four.paralogs)
-names <- unique(dfParalogs$ensembl_gene_id)
-names <- as(names, 'character')
+  four.paralogs <- filterParalogs(paralogs)
+  four.paralogs[four.paralogs==""] <- NA
+  four.paralogs <- na.omit(four.paralogs)
+  names <- (as.data.frame(four.paralogs)$ensemble_gene_id)
+  dfParalogs <- as.data.frame(four.paralogs)
+  names <- unique(dfParalogs$ensembl_gene_id)
+  names <- as(names, 'character')
 
 
-paralog.names <- unique(dfParalogs$hsapiens_paralog_ensembl_gene)
-paralog.names <- as(paralog.names, 'character')
-nameset <- c(paralog.names, names)
-sequences <- getSequences(nameset)
-for(i in seq(1, length(sequences))){
-  outname = paste(nameset[[i]],".fasta", sep="")
-  write.fasta(unlist(sequences)[[i]], names = nameset[[i]], file.out = outname)
-}
-
-
-makeTree <- function(nameset, sequences){
-  alignment <- seqinr::as.alignment(length(nameset),nameset,unlist(sequences))
-  distance <- dist.alignment(alignment, matrix=c("similarity","identity"))
-  tree <- bionj(distance)
-  return(tree)
+  paralog.names <- unique(dfParalogs$hsapiens_paralog_ensembl_gene)
+  paralog.names <- as(paralog.names, 'character')
+  nameset <- c(paralog.names, names)
+  sequences <- getSequences(nameset)
+  for(i in seq(1, length(sequences))){
+    outname = paste(nameset[[i]],".fasta", sep="")
+    write.fasta(unlist(sequences)[[i]], names = nameset[[i]], file.out = outname)
+  }
 
 }
 
-#tree <- makeTree(nameset, sequences)
-#plot(tree)
+
+main <- function(args)
+{
+  if (length(args) > 0)
+  {
+    if (args[1] == "-h" |  args[1] == "-help" | args[1] == "--h" | args[1] == "--help")
+    {
+      showUsageInformation()
+    }
+    else
+    {
+      setwd(args[1])
+      getGenesforPhylo()
+    }
+  }
+  
+}
+
+
+main(commandArgs(T))
