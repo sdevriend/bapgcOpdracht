@@ -31,5 +31,12 @@ echo "Genen zoeken..."
 echo "Genen gevonden. Zoeken naar genen met functie."
 #./EnzymesWithFunctions.R ${TempDir}
 echo "Enzymen gevonden. Bepalen Hydrofobic eigenschappen..."
-./Hydrofobiciteit.R ${TempDir}
+#./Hydrofobiciteit.R ${TempDir}
+echo "Hydrofobic eigenschappen opgezocht."
+echo "Door met intron/exon bepaling."
+#./IntronsAndExons.R ${TempDir}
+echo "Maken MSA."
+#./MSA.R ${TempDir}
+echo "Testen phylo"
+./PhylogenyOfParalogs.R
 echo "Klaar met script"
