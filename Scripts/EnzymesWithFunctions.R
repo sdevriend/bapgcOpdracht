@@ -20,14 +20,14 @@ Enzymes <- function(){
 getEntrez <- function(dfGenes){
   #De functie splitst de ID's op een punt en de unieke lijst
   #Wordt teruggegeven
-  entrez <- unlist(strsplit(dfGenes, "[.]"))
+  entrez <- unlist(strsplit(as.character(dfGenes), '\\.'))
   entrez <- unique(entrez)
   return(entrez)
 }
 
 getEnzymes <- function(geneset){
   #De entrezID's worden genomen door de set te splitsen op een punt
-  entrez <- unlist(strsplit(geneset, "[.]"))
+  entrez <- unlist(strsplit(as.character(geneset), "\\."))
   entrez <- unique(entrez)
   #De duplicaten worden verwijderd
   #De annotaties worden geselecterd
