@@ -35,41 +35,41 @@ setMotifOnGenome <- function(){
   load('motifspart2.RDATA')
   geneset2 <- getGenes(dfTenth2, amount)
 
-  #dfTenth3 <- getMatches(5001, 7500)
-  #save(dfTenth3, file='motifspart3.RDATA')
-  #geneset3 <- getGenes(dfTenth3, amount)
+  dfTenth3 <- getMatches(5001, 7500)
+  save(dfTenth3, file='motifspart3.RDATA')
+  geneset3 <- getGenes(dfTenth3, amount)
 
-  #dfTenth4 <- getMatches(7501, 10000)
-  #save(dfTenth4, file='motifspart4.RDATA')
-  #geneset4 <- getGenes(dfTenth4, amount)
+  dfTenth4 <- getMatches(7501, 10000)
+  save(dfTenth4, file='motifspart4.RDATA')
+  geneset4 <- getGenes(dfTenth4, amount)
 
-  #dfTenth5 <- getMatches(10001, 12500)
-  #save(dfTenth5, file='motifspart5.RDATA')
-  #geneset5 <- getGenes(dfTenth5, amount)
+  dfTenth5 <- getMatches(10001, 12500)
+  save(dfTenth5, file='motifspart5.RDATA')
+  geneset5 <- getGenes(dfTenth5, amount)
 
-  #dfTenth6 <- getMatches(12501, 15000)
-  #save(dfTenth6, file='motifspart6.RDATA')
-  #geneset6 <- getGenes(dfTenth6, amount)
+  dfTenth6 <- getMatches(12501, 15000)
+  save(dfTenth6, file='motifspart6.RDATA')
+  geneset6 <- getGenes(dfTenth6, amount)
 
-  #dfTenth7 <- getMatches(15001, 17500)
-  #save(dfTenth7, file='motifspart7.RDATA')
-  #geneset7 <- getGenes(dfTenth7, amount)
+  dfTenth7 <- getMatches(15001, 17500)
+  save(dfTenth7, file='motifspart7.RDATA')
+  geneset7 <- getGenes(dfTenth7, amount)
 
-  #dfTenth8 <- getMatches(17501, 20000)
-  #save(dfTenth8, file='motifspart8.RDATA')
-  #geneset8 <- getGenes(dfTenth8, amount)
+  dfTenth8 <- getMatches(17501, 20000)
+  save(dfTenth8, file='motifspart8.RDATA')
+  geneset8 <- getGenes(dfTenth8, amount)
 
-  #dfTenth9 <- getMatches(20001, 22500)
-  #save(dfTenth9, file='motifspart9.RDATA')
-  #geneset9 <- getGenes(dfTenth9, amount)
+  dfTenth9 <- getMatches(20001, 22500)
+  save(dfTenth9, file='motifspart9.RDATA')
+  geneset9 <- getGenes(dfTenth9, amount)
 
-  #dfTenth10 <- getMatches(22501, 23779)
-  #save(dfTenth10, file='motifspart10.RDATA')
-  #geneset10 <- getGenes(dfTenth10, amount)
+  dfTenth10 <- getMatches(22501, 23779)
+  save(dfTenth10, file='motifspart10.RDATA')
+  geneset10 <- getGenes(dfTenth10, amount)
 
-  #fullFrame <- data.frame(c(geneset1,geneset10, geneset2, geneset3, 
-  #                        geneset4, geneset5, geneset6, geneset7, geneset8, geneset9))
-  fullFrame <- data.frame(c(geneset1, geneset2))
+  fullFrame <- data.frame(c(geneset1,geneset10, geneset2, geneset3, 
+                          geneset4, geneset5, geneset6, geneset7, geneset8, geneset9))
+  #fullFrame <- data.frame(c(geneset1, geneset2))
   save(fullFrame, file="AllCoregulatedGenes.csv")
 
 }

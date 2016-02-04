@@ -1,21 +1,21 @@
-source("https://bioconductor.org/biocLite.R")
-biocLite("hgu95av2.db")
+#!/usr/bin/Rscript
 library("hgu95av2.db")
 library(limma)
-load("AllCoregulatedGenes.csv")
+Enzymes <- function{
+  load("AllCoregulatedGenes.csv")
 
-# Neemt de honderd beste hits van een genenset (in dit geval een testvar)
-HundredBestHits <- fullFrame[c(1:100),]
-geneset <- getEntrez(HundredBestHits)
-#Genereert annotaties (Entrez, Symbol, Ensembl, functie en EC-nummer)
-annotations <- getEnzymes(unlist(HundredBestHits))
-#Haalt alle annotaties met een EC-nummer op
-enzymes <- annotations[!is.na(annotations$ENZYME),]
-#Zoekt naar hypotheticals, unknowns en uncharacterizeds.
-funcless <- getEnzymesWithKnownFunctions(annotations)
-#Genereert venn diagram
-generateVennDiagram(enzymes)
-
+  # Neemt de honderd beste hits van een genenset (in dit geval een testvar)
+  HundredBestHits <- fullFrame[c(1:100),]
+  geneset <- getEntrez(HundredBestHits)
+  # Genereert annotaties (Entrez, Symbol, Ensembl, functie en EC-nummer)
+  annotations <- getEnzymes(unlist(HundredBestHits))
+  # Haalt alle annotaties met een EC-nummer op
+  enzymes <- annotations[!is.na(annotations$ENZYME),]
+  # Zoekt naar hypotheticals, unknowns en uncharacterizeds.
+  funcless <- getEnzymesWithKnownFunctions(annotations)
+  # Genereert venn diagram
+  generateVennDiagram(enzymes)
+}
 
 getEnzymes <- function(geneset){
   #De entrezID's worden genomen door de set te splitsen op een punt
@@ -64,3 +64,23 @@ generateVennDiagram <- function(enzymeset){
               main="Enzymen zonder functie in de set",
               lwd=2, circle.col="blue", cex=1)
   }
+  
+main <- function(args)
+{
+  if (length(args) > 0)
+  {
+    if (args[1] == "-h" |  args[1] == "-help" | args[1] == "--h" | args[1] == "--help")
+    {
+      showUsageInformation()
+    }
+    else
+    {
+      setwd(args[1])
+      Enzymes()
+    }
+  }
+  
+}
+
+
+main(commandArgs(T))
