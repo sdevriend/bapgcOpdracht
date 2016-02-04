@@ -20,6 +20,7 @@ installdata <- function(){
   biocLite("TFBSTools")
   biocLite("hgu95av2.db")
   biocLite("limma")
+  biocLite("msa")
   #install.packages("foreach")
   #install.packages("doParallel")
   #install.packages("plyr")
