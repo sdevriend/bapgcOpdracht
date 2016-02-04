@@ -5,20 +5,24 @@ library("msa")
 library(Biostrings)
 library(org.Hs.eg.db)
 library(TxDb.Hsapiens.UCSC.hg38.knownGene)
+library(BSgenome.Hsapiens.UCSC.hg38)
 library("hgu95av2.db")
 
 setwd("C:/Users/jesse/Documents/Bio-informatica/Jaar 3/Periode 2/Bapgc/")
 #Gene database en genoom worden gedefinieerd
 txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
 genome <- BSgenome.Hsapiens.UCSC.hg38
-paralogs <- getBM(c("ensembl_gene_id", "hsapiens_paralog_ensembl_gene"),
-                                                       filters="entrezgene", values=genes, g_ensembldatabase)
-g_ensembldatabase = useMart("ensembl", dataset="hsapiens_gene_ensembl")
 load("AllCoregulatedGenes.csv")
-
-
 genes <- fullFrame[c(1:10),]
 genes <- getEntrez(genes)
+
+g_ensembldatabase = useMart("ensembl", dataset="hsapiens_gene_ensembl")
+paralogs <- getBM(c("ensembl_gene_id", "hsapiens_paralog_ensembl_gene"),
+                  filters="entrezgene", values=genes, g_ensembldatabase)
+
+
+
+
 four.paralogs <- filterParalogs(paralogs)
 four.paralogs[four.paralogs==""] <- NA
 four.paralogs <- na.omit(four.paralogs)
@@ -67,12 +71,6 @@ getSequences <- function(id.names){
   transcripts <- transcriptsBy(txdb, by="gene")[entrez.ids]
   transcripts.dna <-getSeq(genome, transcripts)
   return(transcripts.dna)
-}
-getAvailableGenes <- function(geneset){
-  
-  for(i in seq(1,(length(geneset)))){
-    
-  }
 }
 
 
