@@ -1,5 +1,4 @@
 #Paralogs
-source("https://bioconductor.org/biocLite.R")
 library(biomaRt)
 library("msa")
 library(Biostrings)
@@ -77,8 +76,8 @@ getEntrez <- function(dfGenes){
   entrez <- unique(entrez)
   return(entrez)
 }
-
-setwd("C:/Users/jesse/Documents/Bio-informatica/Jaar 3/Periode 2/Bapgc/")
+PhyloTree <- function(){
+setwd("/home/bapgc/bapgcOpdracht/temphsa04916/")
 #Gene database en genoom worden gedefinieerd
 txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
 genome <- BSgenome.Hsapiens.UCSC.hg38
