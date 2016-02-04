@@ -20,10 +20,12 @@ then
     echo "Klaar met downloaden"
 fi
 echo "Ophalen Pathway info van kegg."
-./GenesFromPathway.r ${TempDir} ${Pathway}
+#./GenesFromPathway.r ${TempDir} ${Pathway}
 echo "Ophalen pathway informatie is klaar."
 echo "Starten promoter script."
-./PromoterSeqsFromGenes.R ${TempDir}
+#./PromoterSeqsFromGenes.R ${TempDir}
 echo "Promotor sequenties zijn gevonden. Door met motifs zoeken."
-./MotifsFromPromoterSequences.R ${TempDir}
+#./MotifsFromPromoterSequences.R ${TempDir}
+echo "Genen zoeken..."
+./GenesFromMotifs.R ${TempDir}
 echo "Klaar met script"
