@@ -1,5 +1,5 @@
 #Paralogs
-biocLite("TxDb.Hsapiens.UCSC.hg38.ensGene")
+source("https://bioconductor.org/biocLite.R")
 library(biomaRt)
 library("msa")
 library(Biostrings)
@@ -7,6 +7,76 @@ library(org.Hs.eg.db)
 library(TxDb.Hsapiens.UCSC.hg38.knownGene)
 library(BSgenome.Hsapiens.UCSC.hg38)
 library("hgu95av2.db")
+library(KEGGREST)
+library(seqinr)
+library(ape)
+getSequences <- function(id.names){
+  
+  annotation<- select(hgu95av2.db, key=c(id.names), keytype="ENSEMBL", 
+                      columns=c("ENTREZID"))  
+  annotation<-na.omit(annotation)
+  entrez.ids <- annotation$ENTREZID
+  
+  
+  blacklist <- c()
+  for( i in seq(1,(length(entrez.ids)))){
+    
+    #blacklist[[i]] 
+    black<- tryCatch({
+      transcriptsBy(txdb, by="gene")[entrez.ids[i]]},
+      error = function(err){
+        return(entrez.ids[[i]])
+      })
+    if(class(black) != "GRangesList"){
+      blacklist[[i]] <- black
+    }
+  }
+  blacklist <- na.omit(blacklist)
+  
+  if(length(blacklist) > 0){
+    for(x in seq(1,length(blacklist))){
+      index <- which(entrez.ids == blacklist[x] )
+      entrez.ids <- entrez.ids[-index]
+    }
+  }
+  sequences <- DNAStringSetList()
+  for(gene in seq(1,length(entrez.ids))){
+    gene.info <- keggGet(paste("hsa:",entrez.ids[[gene]], sep=""))
+    sequences[[gene]] <- gene.info[[1]]$NTSEQ
+    
+  }
+  
+  return(sequences)
+  
+}
+
+
+filterParalogs <- function(paralogs){
+  ensembl.IDs <- unique(paralogs$ensembl_gene_id)
+  paralogs.matrix <- matrix(ncol=2)
+  for(x in seq(1, length(ensembl.IDs))){
+    ID <- ensembl.IDs[x]
+    ID.indices <- which((paralogs$ensembl_gene_id == ID)== T)
+    print(length(ID.indices))
+    if(length(ID.indices) > 4){
+      paralogs.filterd <-  as(paralogs[ID.indices[c(1:4)],],"matrix")
+      paralogs.matrix <- rbind(paralogs.matrix, paralogs.filterd)
+    }else{
+      paralogs.filtered.small <- as(paralogs[ID.indices,], "matrix")
+      
+      paralogs.matrix <- rbind(paralogs.matrix, paralogs.filtered.small)
+    }
+  }
+  return(paralogs.matrix[-1,])
+}
+
+getEntrez <- function(dfGenes){
+  #De functie splitst de ID's op een punt en de unieke lijst
+  #Wordt teruggegeven
+  entrez <- unlist(strsplit(dfGenes, "[.]"))
+  entrez <- unique(entrez)
+  return(entrez)
+}
 
 setwd("C:/Users/jesse/Documents/Bio-informatica/Jaar 3/Periode 2/Bapgc/")
 #Gene database en genoom worden gedefinieerd
@@ -34,70 +104,17 @@ names <- as(names, 'character')
 
 paralog.names <- unique(dfParalogs$hsapiens_paralog_ensembl_gene)
 paralog.names <- as(paralog.names, 'character')
+nameset <- c(paralog.names, names)
+sequences <- getSequences(nameset)
 
-sequences <- getSequences(paralog.names)
-alignment <- msa(unlist(sequences))
 
-getSequences <- function(id.names){
-  
-  annotation<- select(hgu95av2.db, key=c(id.names), keytype="ENSEMBL", 
-                      columns=c("ENTREZID"))  
-  annotation<-na.omit(annotation)
-  entrez.ids <- annotation$ENTREZID
-  
+makeTree <- function(nameset, sequences){
+  alignment <- seqinr::as.alignment(length(nameset),nameset,unlist(sequences))
+  distance <- dist.alignment(alignment, matrix=c("similarity","identity"))
+  tree <- bionj(distance)
+  return(tree)
 
-  blacklist <- c()
-  for( i in seq(1,(length(entrez.ids)))){
-    
-    #blacklist[[i]] 
-    black<- tryCatch({
-    transcriptsBy(txdb, by="gene")[entrez.ids[i]]},
-    error = function(err){
-      return(entrez.ids[[i]])
-    })
-    if(class(black) != "GRangesList"){
-      blacklist[[i]] <- black
-    }
-  }
-  blacklist <- na.omit(blacklist)
-  
-  if(length(blacklist) > 0){
-    for(x in seq(1,length(blacklist))){
-      index <- which(entrez.ids == blacklist[x] )
-      entrez.ids <- entrez.ids[-index]
-    }
-  }
-
-  transcripts <- transcriptsBy(txdb, by="gene")[entrez.ids]
-  transcripts.dna <-getSeq(genome, transcripts)
-  return(transcripts.dna)
 }
 
-
-filterParalogs <- function(paralogs){
-  ensembl.IDs <- unique(paralogs$ensembl_gene_id)
-  paralogs.matrix <- matrix(ncol=2)
-  for(x in seq(1, length(ensembl.IDs))){
-    ID <- ensembl.IDs[x]
-    ID.indices <- which((paralogs$ensembl_gene_id == ID)== T)
-    print(length(ID.indices))
-    if(length(ID.indices) > 4){
-    paralogs.filterd <-  as(paralogs[ID.indices[c(1:4)],],"matrix")
-    paralogs.matrix <- rbind(paralogs.matrix, paralogs.filterd)
-    }else{
-      paralogs.filtered.small <- as(paralogs[ID.indices,], "matrix")
-      
-      paralogs.matrix <- rbind(paralogs.matrix, paralogs.filtered.small)
-    }
-  }
-  return(paralogs.matrix[-1,])
-}
-
-getEntrez <- function(dfGenes){
-  #De functie splitst de ID's op een punt en de unieke lijst
-  #Wordt teruggegeven
-  entrez <- unlist(strsplit(dfGenes, "[.]"))
-  entrez <- unique(entrez)
-  return(entrez)
-}
-
+tree <- makeTree(nameset, sequences)
+plot(tree)
