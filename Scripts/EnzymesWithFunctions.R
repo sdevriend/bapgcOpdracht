@@ -1,7 +1,7 @@
 #!/usr/bin/Rscript
 library("hgu95av2.db")
 library(limma)
-Enzymes <- function{
+Enzymes <- function(){
   load("AllCoregulatedGenes.csv")
 
   # Neemt de honderd beste hits van een genenset (in dit geval een testvar)
