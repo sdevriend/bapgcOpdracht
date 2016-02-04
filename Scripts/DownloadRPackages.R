@@ -24,6 +24,7 @@ installdata <- function(){
   biocLite("biomaRt")
   biocLite("seqinr")
   biocLite("ape")
+  biocLite("ggtree")
   #install.packages("foreach")
   #install.packages("doParallel")
   #install.packages("plyr")
