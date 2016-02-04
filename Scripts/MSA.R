@@ -1,4 +1,4 @@
-biocLite("msa")
+#!/usr/bin/Rscript
 library("msa")
 library("GenomicRanges")
 library("BSgenome.Hsapiens.UCSC.hg38")
@@ -7,51 +7,52 @@ library(org.Hs.eg.db)
 library(TxDb.Hsapiens.UCSC.hg38.knownGene)
 library(KEGGREST)
 
-setwd("C:/Users/jesse/Documents/Bio-informatica/Jaar 3/Periode 2/Bapgc/")
-#Gene database en genoom worden gedefinieerd
-txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
-genome <- BSgenome.Hsapiens.UCSC.hg38
+MSA <- function(){
+  #Gene database en genoom worden gedefinieerd
+  txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
+  genome <- BSgenome.Hsapiens.UCSC.hg38
 
-#De lijst met gecoreguleerde genen wordt geladen
-load("AllCoregulatedGenes.csv")
+  #De lijst met gecoreguleerde genen wordt geladen
+  load("AllCoregulatedGenes.csv")
 
-# De bovenste tien hits worden hiervan genomen (moet nog naar 50) en de ID's 
-# Worden omgezet naar Entrez Gene ID's
-msaData <- fullFrame[c(1:50),]
-msaData <- getEntrez(msaData)
+  # De bovenste tien hits worden hiervan genomen (moet nog naar 50) en de ID's 
+  # Worden omgezet naar Entrez Gene ID's
+  msaData <- fullFrame[c(1:50),]
+  msaData <- getEntrez(msaData)
 
-# Alle transcripts van de genen worden geladen,
-# hiervan wordt de sequentie geladen
-x<-6
-sequences <- DNAStringSetList()
-widths <- c()
-for(x in seq(1,length(msaData))){
-  print(msaData[[x]])
-  gene.info <- keggGet(paste("hsa:",msaData[[x]], sep=""))
-  sequences[[x]] <- gene.info[[1]]$NTSEQ
-  widths[[x]] <- width(gene.info[[1]]$NTSEQ)
-}
-alignment<- msa(unlist(sequences))
+  # Alle transcripts van de genen worden geladen,
+  # hiervan wordt de sequentie geladen
+  x <- 6
+  sequences <- DNAStringSetList()
+  widths <- c()
+  for(x in seq(1,length(msaData))){
+    #print(msaData[[x]])
+    gene.info <- keggGet(paste("hsa:",msaData[[x]], sep=""))
+    sequences[[x]] <- gene.info[[1]]$NTSEQ
+    widths[[x]] <- width(gene.info[[1]]$NTSEQ)
+  }
+  alignment<- msa(unlist(sequences))
 # Een DNASeqSet wordt gemaak en uniek gemaakt.
 
 
 # Het langste gen wordt opgeslagen voor later gebruik
-longestGene <- which(widths == max(widths))
-longestGene.name <- msaData[longestGene]
-longest.seq <- sequences[longestGene]
+  longestGene <- which(widths == max(widths))
+  longestGene.name <- msaData[longestGene]
+  longest.seq <- sequences[longestGene]
 
+
+
+  
+
+  longest.gene <- longestGene # TESTVAR
+  
+  getConservedPercentage(longest.gene, alignment)
+}
 getEntrez <- function(dfGenes){
   entrez <- unlist(strsplit(dfGenes, "[.]"))
   entrez <- unique(entrez)
   return(entrez)
 }
-
-testing <- unlist(sequences)
-
-letterFrequency(testing[[5]], letters="ACGT", OR=0)
-testing[[1]]
-
-longest.gene <- longestGene # TESTVAR
 getConservedPercentage <- function(longest.gene, alignment){
   alignment.matrix <- consensusString(unmasked(alignment))
   alignment.unmasked <- unmasked(alignment)
@@ -79,3 +80,24 @@ printSplitString <- function(x, width=getOption("width") - 1)
   for (i in 1:length(starts))
     cat(substr(x, starts[i], starts[i] + width - 1), "\n")
 }
+
+
+main <- function(args)
+{
+  if (length(args) > 0)
+  {
+    if (args[1] == "-h" |  args[1] == "-help" | args[1] == "--h" | args[1] == "--help")
+    {
+      showUsageInformation()
+    }
+    else
+    {
+      setwd(args[1])
+      MSA()
+    }
+  }
+  
+}
+
+
+main(commandArgs(T))
