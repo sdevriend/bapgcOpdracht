@@ -46,7 +46,7 @@ MSA <- function(){
 
   #longest.gene <- longestGene # TESTVAR
   
-  perc <- getConservedPercentage(longest.gene, alignment)
+  perc <- getConservedPercentage(longestGene, alignment)
   print(perc)
 }
 getEntrez <- function(dfGenes){
