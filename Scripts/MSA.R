@@ -34,11 +34,11 @@ MSA <- function(){
   #alignment<- msa(unlist(sequences))
 # Een DNASeqSet wordt gemaak en uniek gemaakt.
 
-
+  alignment <- msa(unlist(sequences))
 # Het langste gen wordt opgeslagen voor later gebruik
-  #longestGene <- which(widths == max(widths))
-  #longestGene.name <- msaData[longestGene]
-  #longest.seq <- sequences[longestGene]
+  longestGene <- which(widths == max(widths))
+  longestGene.name <- msaData[longestGene]
+  longest.seq <- sequences[longestGene]
 
 
 
@@ -46,7 +46,7 @@ MSA <- function(){
 
   #longest.gene <- longestGene # TESTVAR
   
-  perc <- getConservedPercentage(longest.gene, sequences)
+  perc <- getConservedPercentage(longest.gene, alignment)
   print(perc)
 }
 getEntrez <- function(dfGenes){
@@ -54,9 +54,9 @@ getEntrez <- function(dfGenes){
   entrez <- unique(entrez)
   return(entrez)
 }
-getConservedPercentage <- function(longest.gene, sequences){
-  alignment <- msa(unlist(sequences))
-  alignment.matrix <- consensusString(unmasked(alignment))
+getConservedPercentage <- function(longest.gene, alignment){
+  
+  alignment.matrix <- consensusMatrix(unmasked(alignment))
   alignment.unmasked <- unmasked(alignment)
   consensus <- gsub("[?]","", consensusString(alignment.matrix))
   consensus.vector <- unlist(strsplit(consensus, split=""))
