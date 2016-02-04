@@ -29,5 +29,7 @@ echo "Promotor sequenties zijn gevonden. Door met motifs zoeken."
 echo "Genen zoeken..."
 #./GenesFromMotifs.R ${TempDir}
 echo "Genen gevonden. Zoeken naar genen met functie."
-./EnzymesWithFunctions.R ${TempDir}
+#./EnzymesWithFunctions.R ${TempDir}
+echo "Enzymen gevonden. Bepalen Hydrofobic eigenschappen..."
+./Hydrofobiciteit.R ${TempDir}
 echo "Klaar met script"
