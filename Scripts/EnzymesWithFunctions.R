@@ -68,14 +68,15 @@ generateVennDiagram <- function(enzymeset){
   #De twee logische klassen worden vergeleken en een venndiagram wordt gemaakt
   c3 <- cbind(totalEnzyms, noFuncs)
   count <- vennCounts(c3)
-  
-  png <- vennDiagram(count, mar=c(1,1,1,1),
+  png("VennDiagram.png")
+  vennDiagram(count, mar=c(1,1,1,1),
               names=c("Enzymen","Enzymes zonder bekende functie"), 
               main="Enzymen zonder functie in de set",
               lwd=2, circle.col="blue", cex=1)
 			  
   #png(file="VennDiagram.png")
-  writePNG(png, "VennDiagram.png")
+  #writePNG(png, )
+  dev.off()
   }
   
 main <- function(args)
