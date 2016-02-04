@@ -11,10 +11,12 @@ library(KEGGREST)
 library(seqinr)
 library(ape)
 getSequences <- function(id.names){
-  
+  txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene  
   annotation<- select(hgu95av2.db, key=c(id.names), keytype="ENSEMBL", 
                       columns=c("ENTREZID"))  
   annotation<-na.omit(annotation)
+  #print("annotation print")
+  #print(annotation$ENTREZID)
   entrez.ids <- annotation$ENTREZID
   
   
@@ -32,7 +34,7 @@ getSequences <- function(id.names){
     }
   }
   blacklist <- na.omit(blacklist)
-  
+  #print (blacklist)  
   if(length(blacklist) > 0){
     for(x in seq(1,length(blacklist))){
       index <- which(entrez.ids == blacklist[x] )
@@ -40,6 +42,8 @@ getSequences <- function(id.names){
     }
   }
   sequences <- DNAStringSetList()
+  #print("printerprint")
+  #print(entrez.ids)
   for(gene in seq(1,length(entrez.ids))){
     gene.info <- keggGet(paste("hsa:",entrez.ids[[gene]], sep=""))
     sequences[[gene]] <- gene.info[[1]]$NTSEQ
@@ -57,7 +61,7 @@ filterParalogs <- function(paralogs){
   for(x in seq(1, length(ensembl.IDs))){
     ID <- ensembl.IDs[x]
     ID.indices <- which((paralogs$ensembl_gene_id == ID)== T)
-    print(length(ID.indices))
+    #print(length(ID.indices))
     if(length(ID.indices) > 4){
       paralogs.filterd <-  as(paralogs[ID.indices[c(1:4)],],"matrix")
       paralogs.matrix <- rbind(paralogs.matrix, paralogs.filterd)
@@ -85,7 +89,7 @@ getGenesforPhylo <- function(){
   load("AllCoregulatedGenes.csv")
   genes <- fullFrame[c(1:10),]
   genes <- getEntrez(genes)
-
+  #print(genes)
   g_ensembldatabase = useMart("ensembl", dataset="hsapiens_gene_ensembl")
   paralogs <- getBM(c("ensembl_gene_id", "hsapiens_paralog_ensembl_gene"),
                   filters="entrezgene", values=genes, g_ensembldatabase)
