@@ -38,7 +38,7 @@ echo "Door met intron/exon bepaling."
 echo "Maken MSA."
 #./MSA.R ${TempDir}
 echo "Testen phylo"
-#./PhylogenyOfParalogs.R
+./PhylogenyOfParalogs.R ${TempDir}
  cat ${TempDir}/*.fasta | awk '{if (substr($1,1,1) == ">") print $0" "; else print $1}' | tr -d "\n" | tr ">" "\n"  > ${TempDir}/multitemp.fa
  cat ${TempDir}/multitemp.fa  | awk '{if(NR>1)print $0}' | awk '{print ">"$0}' | sed s/" "/"\n"/  > ${TempDir}/tree.fa
  clustalw data -infile=${TempDir}/tree.fa -tree -outputtree=dist 
