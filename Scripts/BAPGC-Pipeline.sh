@@ -27,5 +27,7 @@ echo "Starten promoter script."
 echo "Promotor sequenties zijn gevonden. Door met motifs zoeken."
 #./MotifsFromPromoterSequences.R ${TempDir}
 echo "Genen zoeken..."
-./GenesFromMotifs.R ${TempDir}
+#./GenesFromMotifs.R ${TempDir}
+echo "Genen gevonden. Zoeken naar genen met functie."
+./EnzymesWithFunctions.R ${TempDir}
 echo "Klaar met script"
