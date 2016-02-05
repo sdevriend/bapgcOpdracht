@@ -26,25 +26,25 @@ MSA <- function(){
   txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
   genome <- BSgenome.Hsapiens.UCSC.hg38
   load("AllCoregulatedGenes.csv")
-  msaData <- fullFrame[c(1:50),]
-  msaData <- getEntrez(msaData)
+  fctMsaData <- fullFrame[c(1:50),]
+  fctMsaData <- getEntrez(fctMsaData)
 
   # De sequenties en de lengten van de genen worden in een DNAStringSetList
   # en een vector opgeslagen
   sequences <- DNAStringSetList()
-  widths <- c()
-  for(x in seq(1,length(msaData))){
-    gene.info <- keggGet(paste("hsa:",msaData[[x]], sep=""))
+  vctWidths <- c()
+  for(x in seq(1,length(fctMsaData))){
+    gene.info <- keggGet(paste("hsa:",fctMsaData[[x]], sep=""))
     sequences[[x]] <- gene.info[[1]]$NTSEQ
-    widths[[x]] <- width(gene.info[[1]]$NTSEQ)
+    vctWidths[[x]] <- width(gene.info[[1]]$NTSEQ)
   }
 
   # De alignment wordt uitgevoerd
   alignment <- msa(unlist(sequences))
 
   # De naam en sequentie van het langste gen worden opgeslagen
-  longestGene <- which(widths == max(widths))
-  longestGene.name <- msaData[longestGene]
+  longestGene <- which(vctWidths == max(vctWidths))
+  longestGene.name <- fctMsaData[longestGene]
   longest.seq <- sequences[longestGene]
   
   # Het percentage conservering van het langste gen wordt berekend 
@@ -56,34 +56,34 @@ MSA <- function(){
   write.table(taWriteRes, row.names=FALSE, file="MSARESULT.txt")
 }
 
-getEntrez <- function(dfGenes){
+getEntrez <- function(vctGenes){
   #De functie splitst de genen op een punt en geeft de 
   #Entrez ID's terug
-  entrez <- unlist(strsplit(dfGenes, "[.]"))
-  entrez <- unique(entrez)
-  return(entrez)
+  vctEntrez <- unlist(strsplit(as.character(vctGenes), "[.]"))
+  vctEntrez <- unique(vctEntrez)
+  return(vctEntrez)
 }
 
 getConservedPercentage <- function(longest.gene, alignment){
   #De consensus van de alignment wordt genomen en
-  #De 
-  alignment.matrix <- consensusMatrix(unmasked(alignment))
+  #De ?s worden verwijderd
+  mtAlignment <- consensusMatrix(unmasked(alignment))
   alignment.unmasked <- unmasked(alignment)
-  consensus <- gsub("[?]","", consensusString(alignment.matrix))
-  consensus.vector <- unlist(strsplit(consensus, split=""))
+  consensus <- gsub("[?]","", consensusString(mtAlignment))
+  vctConsensus <- unlist(strsplit(consensus, split=""))
   
   # De lengte van de sequentie van het langste gen 
   # en van de alignment worden geteld. Als twee tekens overeen komen,
   # worden deze opgeslagen. Hieruit wordt een percentage berekend.
   # Het percentage wordt teruggegeven.
-  NT.count<-length(consensus.vector)
+  NT.count<-length(vctConsensus)
   longest.seq <- alignment.unmasked[longest.gene]
   longest <- gsub("[?]","", longest.seq)
-  longest.vector <- unlist(strsplit(longest, split=""))
-  longest.count <- length(longest.vector)
+  vctLongest <- unlist(strsplit(longest, split=""))
+  longest.count <- length(vctLongest)
   count <- 0
-  for(y in seq(1, length(consensus.vector))){
-    if(consensus.vector[[y]] == longest.vector[[y]]){
+  for(y in seq(1, length(vctConsensus))){
+    if(vctConsensus[[y]] == vctLongest[[y]]){
       count <- count + 1
     }
   }

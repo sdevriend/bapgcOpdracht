@@ -12,10 +12,10 @@ PreferenceRatio <- function(){
   genome <- BSgenome.Hsapiens.UCSC.hg38
 
   #Alle gevonden genen worden geladen en de eerste 10 worden meegenomen
- #De ID's worden omgezet naar Entrez Gene ID's 
-  geneList <- load("AllCoregulatedGenes.csv")
-  Protein.data <- fullFrame[c(1:10),]
-  Protein.data <- getEntrez(Protein.data)
+  #De ID's worden omgezet naar Entrez Gene ID's 
+  load("AllCoregulatedGenes.csv")
+  vctProtein.data <- fullFrame[c(1:10),]
+  vctProtein.data <- getEntrez(vctProtein.data)
 
   # Alle exons van de genen worden geladen,
   # hiervan wordt de sequentie geladen
@@ -30,12 +30,12 @@ PreferenceRatio <- function(){
 
 }
 
-getEntrez <- function(dfGenes){
-  #De functie splitst de ID's op een punt en de unieke lijst
-  #Wordt teruggegeven
-  entrez <- unlist(strsplit(dfGenes, "[.]"))
-  entrez <- unique(entrez)
-  return(entrez)
+getEntrez <- function(vctGenes){
+  #De functie splitst de genen op een punt en geeft de 
+  #Entrez ID's terug
+  vctEntrez <- unlist(strsplit(as.character(vctGenes), "[.]"))
+  vctEntrez <- unique(vctEntrez)
+  return(vctEntrez)
 }
 
 
@@ -65,21 +65,24 @@ getRatios <- function(AAStringSet){
     hydrophilic <- hydrophilic/total*100
     hydrophobic <- hydrophobic/total*100
     total <- 100
-    dfAmounts <- rbind(dfAmounts, c(hydrophobic, hydrophilic, (total-hydrophobic-hydrophilic)))
+    dfAmounts <- rbind(dfAmounts, c(hydrophobic, hydrophilic, 
+		(total-hydrophobic-hydrophilic)))
     }
   return(dfAmounts[-1,])
 }
 
 generateBarplot <- function(Protein.AA, dfAmounts){
-  dfNew <- matrix(ncol=3)
-
+  # De aantallen matrix wordt omgedraaid (rijen worden kolommen en v.v)
+  # Een figuur wordt gemaakt, en een plot wordt gegenereerd en weggeschreven
   dfAmounts.t <- t(dfAmounts)
   png("Hydrofobiciteit.png")
   rownames(dfAmounts.t) <- c("Hydrophoob","Hydrofiel","Totaal")
   colnames(dfAmounts.t) <- unique(names(Protein.AA))
-  barplot(dfAmounts.t, main="Verdeling hydrofobiciteit in gecoreguleerde genen",
-        xlab="Entrez ID", ylab="Frequentie", col=c("darkblue","blue","lightblue"),
-        legend = rownames(dfAmounts.t), beside=FALSE)
+  barplot(dfAmounts.t, 
+	main="Verdeling hydrofobiciteit in gecoreguleerde genen",
+    xlab="Entrez ID", ylab="Frequentie",
+	col=c("darkblue","blue","lightblue"),
+    legend = rownames(dfAmounts.t), beside=FALSE)
   dev.off()
 }
 
