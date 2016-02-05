@@ -1,0 +1,9 @@
+Voor Sebastiaan:
+- Verander de hoeveelheid genen in de M&M en resultaat naar jouw hoeveelheid gevonden genen. Deze zijn hardcoded.
+- Zet je eigen inleiding in het bestand
+- Zet je eigen disclusie in het bestand
+- Roep het script aan in de hoofdpipeline zoals in het script "generatePDF.sh". 
+- Drink beer
+- Go F*ck yourself
+- ???
+- Profit
