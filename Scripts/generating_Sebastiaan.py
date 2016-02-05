@@ -11,7 +11,7 @@ def showUsageInformation():
     print("Het script bevat de strings nodig om een LaTeX bestand")
     print("Te genereren. Dit bestand wordt weggeschreven")
     print("")
-    print("generating_Jesse.py -n 'S1082434' -name 'Piet' -title 'Hello World'")
+    print("generating_Sebastiaan.py -n 'S1082434' -name 'Piet' -title 'Hello World'")
     print()
     sys.exit()
 
@@ -60,16 +60,16 @@ def inleiding():
     {Dit document wordt automatisch gegenereerd door de
     BapgcCoregulationPipeline. Het document gaat over de regulatie van
     genen in een metabolische route. Er wordt onderzocht welke genen
-    een rol spelen in de adipocytokine signaal-pathway.
-    Er wordt gezocht naar genen waarvan nog niet bekend is dat ze een rol
-    spelen in de ze route. Een adipocytokine is een cytokine dat
-    uitgescheiden wordt door vetweefsel. De uitscheiding van een cytokine
-    zorgt voor een verandering van het gedrag van een cel. Een bekend
-    voorbeeld van een adipocytokine is leptine.
-    Deze adipocytokine zorgt voor de onderdrukking van hongergevoel.
-    De pathway controleert en reguleert de glucoseopname en de aanmaak van
-    nieuwe glucose. De onderzoeksvraag bij dit onderzoek is dan ook:
-    zijn er andere genen die bij de adipocytokine signaal-pathway horen?
+    een rol spelen in het Melanogenesis signaal-pathway.
+    Melanogenesis is de productie van melanine. 
+    Melanine is een pigment die gevonden wordt in de huid en het haar. 
+    De taak van melanine is om de onderste laag van de huid te beschermen
+    tegen schadelijke UV-B straling. 
+    Melanine is donker opdat het meer licht absorbeert.
+    Melanogenesis zorgt er dus voor dat de huid van een mens donkerder kleurt
+    na blootstelling aan zonlicht. De onderzoeksvraag die gesteld wordt bij
+    dit onderzoek is als volgt: Zijn er genen die hetzelfde gereguleerd
+    worden als de genen van het Melanogenesis signaal-pathway?
     '''
     
     return inleiding
@@ -90,7 +90,7 @@ def materiaal_methode():
         transcriptiefactoren die de pathway reguleert.
         Hierna wordt het hele humane genoom gescand op deze motifs.
         De genen die elk van deze motifs bevatten, worden meegenomen als
-        medegereguleerde genen. Dit zijn 13928 genen.
+        medegereguleerde genen. Dit zijn 19476 genen.
         }
         \newline
         \newline
@@ -130,9 +130,9 @@ def resultaat(rMotifs):
     {\Huge Resultaten}
     {Uit het zoeken naar transcriptiefactoren zijn de volgende motifs
     geselecteerd:
-    %s , %s, %s, %s, %s.}
+    %s , %s, %s.}
     \newline
-    {Dit resulteert in een set van 13928 genen}
+    {Dit resulteert in een set van 19476 genen}
     {Van de bovenste 100 genen van deze set is gezocht naar enzymen. 
     De hoeveelheid enzymen en de enzymen zonder functie is in figuur 2.}
 
@@ -151,7 +151,7 @@ def resultaat(rMotifs):
 
     \begin{figure}[h]
     \includegraphics[width=0.5\textwidth]{Hydrofobiciteit}
-    \caption{VennDiagram van alle enzymen in de dataset}
+    \caption{Hydrofobiciteit van de 20 beste genen.}
     \end{figure}
 
     {Van de bovenste 10 medegereguleerde genen is gezocht naar maximaal vier
@@ -160,15 +160,15 @@ def resultaat(rMotifs):
 
     \begin{figure}[h]
     \includegraphics[width=0.8\textwidth]{tree}
-    \caption{VennDiagram van alle enzymen in de dataset}
+    \caption{{Phylogenetische boom van de 19 beste genen.}}
     \end{figure}
 
-    {Van de bovenste 20 medegereguleerde genen is de lengte van de intronen en exonen bepaald.
+    {Van de bovenste 19 medegereguleerde genen is de lengte van de intronen en exonen bepaald.
     De resultaten hiervan zijn te zien in figuur 5}
 
     \begin{figure}[h]
     \includegraphics[width=0.8\textwidth]{IntronsExons}
-    \caption{VennDiagram van alle enzymen in de dataset}
+    \caption{Intronen en exonen lengtes.}
     \end{figure}
     '''
     result = result % tuple(rMotifs)
@@ -185,21 +185,27 @@ def discussie_conclusie():
     \newpage
     {\Huge Discussie en conclusie}
     \newline
-    In de resultaten is te zien dat de hoeveelheid medegereguleerde genen
-    erg groot is. Hieruit kan de conclusie getrokken worden dat er een
-    probleem op is getreden bij het uitkiezen van deze medegereguleerde genen.
-    Mogelijk is een motif te aspecifiek om een gen als mederegulerend te
-    kunnen benoemen. In de grafieken is te zien dat er drie enzymen in de
-    dataset te vinden zijn. Ieder van deze enzymen heeft een bekende functie.
-    In figuur 3 is te zien dat de eiwitten van de bovenste 10 genen
-    vooral hydrofoob zijn. In figuur 4 is te zien dat er geen duidelijke
-    structuur te herkennen is in de fylogenie van de paralogen van de 20 beste
-    hits. In figuur 5 is te zien dat veel genen erg laag staan op de assen.
-    Dit betekent dat zowel de intron- als de exonlengte erg laag is. Verwacht
-    wordt dat de intronlengte veel groter is dan de exonlengte.
-    Dit samengenomen kan er geen bindende conclusie gebonden worden aan de
-    onderzoeksvraag: zijn er andere genen die bij de adipocytokine signaal-pathway
-    horen?
+    Wat meteen duidelijk te zien is in de resultaten, is dat er 19476 genen
+    gereguleerd worden. Deze hoeveelheid is erg groot voor een specifieke
+    pathway. Mogelijk komt dit omdat er niet goed gefilterd is bij het zoeken
+    naar genen die bij motieven horen en is er niet gekeken naar de
+    specifieke frameworks die horen bij het pathway. Daarnaast zijn er drie
+    motifs gevonden voor alle genen op het pathway. Dit had aangepast kunnen
+    worden naar tien motifs die 90% van de genen reguleren. Dit had waarschijnlijk
+    miner genen opgeleverd. Hierdoor is er te concluderen dat de gevonden genen
+    niet specifiek genoeg zijn voor de onderzoeksvraag.
+    In figuur 2 is te zien dat er drie enzymen zijn gevonden in de genenlijst.
+    De drie enzymen hebben een bekende functie. In figuur 3 is goed te zien
+    dat de gevonden eiwitten vooral hydrofoob zijn. In figuur 4 is te zien dat
+    er geen concluderend resultaat is voor de fylogenetische boom, maar wel is
+    er te zien dat er geen out-groups zijn.
+    In figuur 5 is er te zien dat er veel genen laag op de intron as staan
+    en laag op de exon as. Dit betekend dat veel genen kort zijn. Er wordt
+    namelijk verwacht dat de meeste genen hoog op de intron as staan en
+    op gemiddelde hoogte op de exon as.
+    De onderzoeksvraag: Zijn er genen die hetzelfde gereguleerd
+    worden als de genen van het Melanogenesis signaal-pathway? kan niet goed 
+    beantwoord worden.
     \end{document}
     '''
     return disclusie
