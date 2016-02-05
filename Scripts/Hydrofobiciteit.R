@@ -2,18 +2,17 @@
 
 
 library(Biostrings)
-library("BSgenome.Hsapiens.UCSC.hg38")
-library("GenomicRanges")
+library(BSgenome.Hsapiens.UCSC.hg38)
+library(GenomicRanges)
 library(TxDb.Hsapiens.UCSC.hg38.knownGene)
 library(org.Hs.eg.db)
 
 
-showUsageInformation <- function()
-{
+showUsageInformation <- function(){
   print("") 
   print("Genereert een barplot voor de hydrofobiciteit van de 10 beste")
   print("medegereguleerde genen. De aminozuren worden verdeeld in")
-  print("de categorieën: hydrofoob, hydrofiel en neutraal.")
+  print("de categorieen: hydrofoob, hydrofiel en neutraal.")
   print("Het script kan aangeroepen worden door Hydrofobiciteit.R")
   print("")
   quit()
@@ -33,7 +32,7 @@ PreferenceRatio <- function(){
   # Alle exons van de genen worden geladen,
   # hiervan wordt de sequentie geladen
   # De sequenties worden getransleerd naar AA sequenties
-  exons <- exonsBy(txdb, by="gene")[Protein.data]
+  exons <- exonsBy(txdb, by="gene")[vctProtein.data]
   protein.dna <- getSeq(genome, exons)
   Protein.AA <- translate(unlist(protein.dna))
 
