@@ -37,11 +37,12 @@ MSA <- function(){
   sequences <- DNAStringSetList()
   vctWidths <- c()
   for(x in seq(1,length(fctMsaData))){
+    print(fctMsaData[[x]])
     gene.info <- keggGet(paste("hsa:",fctMsaData[[x]], sep=""))
     sequences[[x]] <- gene.info[[1]]$NTSEQ
     vctWidths[[x]] <- width(gene.info[[1]]$NTSEQ)
   }
-
+  print("uit de loop?")
   # De alignment wordt uitgevoerd
   alignment <- msa(unlist(sequences))
 
