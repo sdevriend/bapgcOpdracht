@@ -7,63 +7,75 @@ library(org.Hs.eg.db)
 library(TxDb.Hsapiens.UCSC.hg38.knownGene)
 library(KEGGREST)
 
+showUsageInformation <- function()
+{
+  print("") 
+  print("Berkent het percentage conservatie van het langste gen")
+  print("aan de hand van de vijftig beste medegereguleerde genen.")
+  print("Dit wordt gedaan met behulp van eem Multiple Sequence Alignment (MSA)")
+  print("Het script kan aangeroepen worden door MSA.R")
+  print("")
+  quit()
+}
+
 MSA <- function(){
   #Gene database en genoom worden gedefinieerd
+  #De lijst met gecoreguleerde genen wordt geladen
+  # De bovenste vijftig hits worden hiervan genomen en de ID's 
+  # Worden omgezet naar Entrez Gene ID's
   txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
   genome <- BSgenome.Hsapiens.UCSC.hg38
-
-  #De lijst met gecoreguleerde genen wordt geladen
   load("AllCoregulatedGenes.csv")
-
-  # De bovenste tien hits worden hiervan genomen (moet nog naar 50) en de ID's 
-  # Worden omgezet naar Entrez Gene ID's
   msaData <- fullFrame[c(1:50),]
   msaData <- getEntrez(msaData)
 
-  # Alle transcripts van de genen worden geladen,
-  # hiervan wordt de sequentie geladen
-  x <- 6
+  # De sequenties en de lengten van de genen worden in een DNAStringSetList
+  # en een vector opgeslagen
   sequences <- DNAStringSetList()
   widths <- c()
   for(x in seq(1,length(msaData))){
-    #print(msaData[[x]])
     gene.info <- keggGet(paste("hsa:",msaData[[x]], sep=""))
     sequences[[x]] <- gene.info[[1]]$NTSEQ
     widths[[x]] <- width(gene.info[[1]]$NTSEQ)
   }
-  #alignment<- msa(unlist(sequences))
-# Een DNASeqSet wordt gemaak en uniek gemaakt.
 
+  # De alignment wordt uitgevoerd
   alignment <- msa(unlist(sequences))
-# Het langste gen wordt opgeslagen voor later gebruik
+
+  # De naam en sequentie van het langste gen worden opgeslagen
   longestGene <- which(widths == max(widths))
   longestGene.name <- msaData[longestGene]
   longest.seq <- sequences[longestGene]
-
-
-
   
-
-  #longest.gene <- longestGene # TESTVAR
-  
+  # Het percentage conservering van het langste gen wordt berekend 
+  # En de resultaten worden weggeschreven
   perc <- getConservedPercentage(longestGene, alignment)
   maPerc <- as.matrix(perc)
   colnames(maPerc) <- c(longestGene.name)
   taWriteRes <- as.table(maPerc)
   write.table(taWriteRes, row.names=FALSE, file="MSARESULT.txt")
 }
+
 getEntrez <- function(dfGenes){
+  #De functie splitst de genen op een punt en geeft de 
+  #Entrez ID's terug
   entrez <- unlist(strsplit(dfGenes, "[.]"))
   entrez <- unique(entrez)
   return(entrez)
 }
+
 getConservedPercentage <- function(longest.gene, alignment){
-  
+  #De consensus van de alignment wordt genomen en
+  #De 
   alignment.matrix <- consensusMatrix(unmasked(alignment))
   alignment.unmasked <- unmasked(alignment)
   consensus <- gsub("[?]","", consensusString(alignment.matrix))
   consensus.vector <- unlist(strsplit(consensus, split=""))
   
+  # De lengte van de sequentie van het langste gen 
+  # en van de alignment worden geteld. Als twee tekens overeen komen,
+  # worden deze opgeslagen. Hieruit wordt een percentage berekend.
+  # Het percentage wordt teruggegeven.
   NT.count<-length(consensus.vector)
   longest.seq <- alignment.unmasked[longest.gene]
   longest <- gsub("[?]","", longest.seq)
@@ -79,12 +91,6 @@ getConservedPercentage <- function(longest.gene, alignment){
   return(percentage)
 }
 
-printSplitString <- function(x, width=getOption("width") - 1)
-{
-  starts <- seq(from=1, to=nchar(x), by=width)
-  for (i in 1:length(starts))
-    cat(substr(x, starts[i], starts[i] + width - 1), "\n")
-}
 
 
 main <- function(args)
@@ -106,3 +112,12 @@ main <- function(args)
 
 
 main(commandArgs(T))
+
+# Additional information:
+# =======================
+# Dit script is geschreven door Jesse Kerkvliet en
+# kan gebruikt worden bij de opdracht van bapgc door
+# Sebastiaan de Vriend.
+#
+# Genereert een MSA en berekent het percentage conservering van 
+# Het langste gen
