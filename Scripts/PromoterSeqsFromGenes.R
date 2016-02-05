@@ -76,5 +76,3 @@ main(commandArgs(T))
 # ./PromoterSeqsFromGenes Werkmap
 # Als output wordt een Rdata file opgeslagen in de werkmap.
 # Deze kan gebruikt worden voor vervolgstappen.
-
-

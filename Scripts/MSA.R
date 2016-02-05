@@ -1,11 +1,14 @@
 #!/usr/bin/Rscript
-library("msa")
-library("GenomicRanges")
-library("BSgenome.Hsapiens.UCSC.hg38")
+
+
 library(Biostrings)
+library("BSgenome.Hsapiens.UCSC.hg38")
+library("GenomicRanges")
+library(KEGGREST)
+library("msa")
 library(org.Hs.eg.db)
 library(TxDb.Hsapiens.UCSC.hg38.knownGene)
-library(KEGGREST)
+
 
 showUsageInformation <- function()
 {
@@ -91,8 +94,6 @@ getConservedPercentage <- function(longest.gene, alignment){
   return(percentage)
 }
 
-
-
 main <- function(args)
 {
   if (length(args) > 0)
@@ -107,9 +108,7 @@ main <- function(args)
       MSA()
     }
   }
-  
 }
-
 
 main(commandArgs(T))
 

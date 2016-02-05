@@ -1,10 +1,13 @@
 #!/usr/bin/Rscript
+
+
 library(Biostrings)
-library(org.Hs.eg.db)
-library(TxDb.Hsapiens.UCSC.hg38.knownGene)
 library("hgu95av2.db")
 library("BSgenome.Hsapiens.UCSC.hg38")
+library(org.Hs.eg.db)
 library(png)
+library(TxDb.Hsapiens.UCSC.hg38.knownGene)
+
 
 showUsageInformation <- function()
 {
@@ -15,7 +18,6 @@ showUsageInformation <- function()
   print("")
   quit()
 }
-
 
 IntroExons <- function(){
   #Gene database en genoom worden gedefinieerd
@@ -46,8 +48,7 @@ IntroExons <- function(){
   png("IntronsExons.png")
   plot(dflengths$V2, dflengths$V1, xlab="Intronlengte", ylab="Exonlengte",
      main="Scatterplot van 20 gecorelugeerde genen")
-  dev.off()
-	 
+  dev.off() 
 }
 
 getEntrez <- function(vctGenes){
@@ -57,7 +58,6 @@ getEntrez <- function(vctGenes){
   vctEntrez <- unique(vctEntrez)
   return(vctEntrez)
 }
-
 
 main <- function(args)
 {
@@ -73,9 +73,7 @@ main <- function(args)
       IntroExons()
     }
   }
-  
 }
-
 
 main(commandArgs(T))
 

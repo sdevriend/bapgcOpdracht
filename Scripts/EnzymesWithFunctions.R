@@ -1,7 +1,11 @@
 #!/usr/bin/Rscript
+
+
 library("hgu95av2.db")
 library(limma)
 library(png)
+
+
 showUsageInformation <- function()
 {
   print("") 
@@ -13,6 +17,7 @@ showUsageInformation <- function()
   print("")
   quit()
 }
+
 Enzymes <- function(){
 	# Alle gevonden medegereguleerde genen worden ingeladen.
 	# De honderd bovenste hits van de lijst worden genomen en de 
@@ -41,8 +46,6 @@ getEntrez <- function(dfGenes){
     return(vctEntrez)
 }
 
-
-
 generateVennDiagram <- function(dfEnzymeset){
     #De functieloze enzymen worden gezocht,
 	#Een logical object wordt gemaakt met alle enzymen die een EC-nummer hebben
@@ -62,7 +65,7 @@ generateVennDiagram <- function(dfEnzymeset){
 
 	dev.off()
   }
-  
+
 main <- function(args)
 {
   if (length(args) > 0)
@@ -79,7 +82,6 @@ main <- function(args)
   }
   
 }
-
 
 main(commandArgs(T))
 

@@ -1,9 +1,12 @@
 #!/usr/bin/Rscript
-library("GenomicRanges")
-library("BSgenome.Hsapiens.UCSC.hg38")
+
+
 library(Biostrings)
-library(org.Hs.eg.db)
+library("BSgenome.Hsapiens.UCSC.hg38")
+library("GenomicRanges")
 library(TxDb.Hsapiens.UCSC.hg38.knownGene)
+library(org.Hs.eg.db)
+
 
 showUsageInformation <- function()
 {
@@ -37,7 +40,6 @@ PreferenceRatio <- function(){
   #De hydrofobiciteit wordt geteld en de barplot wordt gegenereerd
   dfAmounts <- getRatios(Protein.AA)
   generateBarplot(Protein.AA, dfAmounts)
-
 }
 
 getEntrez <- function(vctGenes){
@@ -48,12 +50,10 @@ getEntrez <- function(vctGenes){
   return(vctEntrez)
 }
 
-
 getRatios <- function(AAStringSet){
   #Een set van unieke ID's wordt gegenereerd en een lege matrix wordt gemaakt
   IDs.Unique <- unique(names(AAStringSet))
   dfAmounts <- matrix(ncol=3)
-  
   #Voor ieder ID in de unieke ID list wordt een set van eiwitsequenties
   #gemaakt, horend bij dat ID.
   #Ieder aminozuur wordt geteld. De set van hydrofobische AA's wordt geteld
@@ -110,9 +110,7 @@ main <- function(args)
       PreferenceRatio()
     }
   }
-  
 }
-
 
 main(commandArgs(T))
 
