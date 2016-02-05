@@ -128,6 +128,7 @@ def resultaat(rMotifs):
     result = r'''
     \newpage
     {\Huge Resultaten}
+    \newline
     {Uit het zoeken naar transcriptiefactoren zijn de volgende motifs
     geselecteerd:
     %s , %s, %s.}
@@ -194,15 +195,20 @@ def discussie_conclusie():
     worden naar tien motifs die 90% van de genen reguleren. Dit had waarschijnlijk
     miner genen opgeleverd. Hierdoor is er te concluderen dat de gevonden genen
     niet specifiek genoeg zijn voor de onderzoeksvraag.
+    \newline
     In figuur 2 is te zien dat er drie enzymen zijn gevonden in de genenlijst.
-    De drie enzymen hebben een bekende functie. In figuur 3 is goed te zien
+    De drie enzymen hebben een bekende functie. 
+    \newline
+    In figuur 3 is goed te zien
     dat de gevonden eiwitten vooral hydrofoob zijn. In figuur 4 is te zien dat
     er geen concluderend resultaat is voor de fylogenetische boom, maar wel is
     er te zien dat er geen out-groups zijn.
+    \newline
     In figuur 5 is er te zien dat er veel genen laag op de intron as staan
     en laag op de exon as. Dit betekend dat veel genen kort zijn. Er wordt
     namelijk verwacht dat de meeste genen hoog op de intron as staan en
     op gemiddelde hoogte op de exon as.
+    \newline
     De onderzoeksvraag: Zijn er genen die hetzelfde gereguleerd
     worden als de genen van het Melanogenesis signaal-pathway? kan niet goed 
     beantwoord worden.
