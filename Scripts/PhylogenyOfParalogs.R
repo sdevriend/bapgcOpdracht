@@ -1,15 +1,17 @@
 #!/usr/bin/Rscript
-#Paralogs
+
+
+library(ape)
 library(biomaRt)
-library("msa")
 library(Biostrings)
-library(org.Hs.eg.db)
-library(TxDb.Hsapiens.UCSC.hg38.knownGene)
 library(BSgenome.Hsapiens.UCSC.hg38)
 library("hgu95av2.db")
 library(KEGGREST)
+library("msa")
+library(org.Hs.eg.db)
+library(TxDb.Hsapiens.UCSC.hg38.knownGene)
 library(seqinr)
-library(ape)
+
 
 showUsageInformation <- function()
 {
@@ -62,9 +64,7 @@ getSequences <- function(id.names){
   }
   # De sequenties worden teruggegeven
   return(sequences)
-  
 }
-
 
 filterParalogs <- function(paralogs){
   #Voor ieder gen wordt gekeken hoe veel paralogen
@@ -81,7 +81,6 @@ filterParalogs <- function(paralogs){
       paralogs.matrix <- rbind(paralogs.matrix, paralogs.filterd)
     }else{
       paralogs.filtered.small <- as(paralogs[ID.indices,], "matrix")
-      
       paralogs.matrix <- rbind(paralogs.matrix, paralogs.filtered.small)
     }
   }
@@ -92,9 +91,10 @@ getEntrez <- function(dfGenes){
   #De functie splitst de ID's op een punt en de unieke lijst
   #Wordt teruggegeven
   vctEntrez <- unlist(strsplit(as.character(dfGenes), '\\.'))
-  vctEntrez <- unique(entrez)
+  vctEntrez <- unique(vctEntrez)
   return(vctEntrez)
 }
+
 getGenesforPhylo <- function(){
   #Gene database en genoom worden gedefinieerd
   #De beste 10 beste medegereguleerde worden geladen
@@ -130,12 +130,10 @@ getGenesforPhylo <- function(){
   
   #Iedere sequentie wordt weggeschreven naar een fasta bestand.
   for(i in seq(1, length(sequences))){
-  outname = paste(nameset[[i]],".fasta", sep="")
-  write.fasta(unlist(sequences)[[i]], names = nameset[[i]], file.out = outname)
+  outname = paste(vctNameset[[i]],".fasta", sep="")
+  write.fasta(unlist(sequences)[[i]], names = vctNameset[[i]], file.out = outname)
   }
-
 }
-
 
 main <- function(args)
 {
@@ -151,9 +149,7 @@ main <- function(args)
       getGenesforPhylo()
     }
   }
-  
 }
-
 
 main(commandArgs(T))
 

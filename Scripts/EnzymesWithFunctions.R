@@ -1,7 +1,11 @@
 #!/usr/bin/Rscript
+
+
 library("hgu95av2.db")
 library(limma)
 library(png)
+
+
 showUsageInformation <- function()
 {
   print("") 
@@ -13,6 +17,7 @@ showUsageInformation <- function()
   print("")
   quit()
 }
+
 Enzymes <- function(){
 	# Alle gevonden medegereguleerde genen worden ingeladen.
 	# De honderd bovenste hits van de lijst worden genomen en de 
@@ -25,11 +30,10 @@ Enzymes <- function(){
 	load("AllCoregulatedGenes.csv")
 	vctHundredBestHits <- fullFrame[c(1:100),]
 	vctGeneset <- getEntrez(vctHundredBestHits)
-	dfAnnotations<- select(hgu95av2.db, key=entrez, keytype="ENTREZID", 
+	dfAnnotations<- select(hgu95av2.db, key=vctGeneset, keytype="ENTREZID", 
                       columns=c("GENENAME","ENZYME", 
                                 "ENTREZID"))
 	dfEnzymes <- dfAnnotations[!is.na(dfAnnotations$ENZYME),]
-	funcless <- getEnzymesWithKnownFunctions(dfAnnotations)
 	generateVennDiagram(dfEnzymes)
 }
 
@@ -37,11 +41,9 @@ getEntrez <- function(dfGenes){
     #De functie splitst de ID's op een punt en de unieke lijst
     #Wordt teruggegeven
     vctEntrez <- unlist(strsplit(as.character(dfGenes), '\\.'))
-    vctEntrez <- unique(entrez)
+    vctEntrez <- unique(vctEntrez)
     return(vctEntrez)
 }
-
-
 
 generateVennDiagram <- function(dfEnzymeset){
     #De functieloze enzymen worden gezocht,
@@ -52,7 +54,7 @@ generateVennDiagram <- function(dfEnzymeset){
         dfEnzymeset$GENENAME)
 	dfTotalEnzyms <- (!is.na(dfEnzymeset$ENZYME))
 
-	mtDelen <- cbind(totalEnzyms, noFuncs)
+	mtDelen <- cbind(dfTotalEnzyms, dfNoFuncs)
 	count <- vennCounts(mtDelen)
 	png("VennDiagram.png")
 	vennDiagram(count, mar=c(1,1,1,1),
@@ -62,7 +64,7 @@ generateVennDiagram <- function(dfEnzymeset){
 
 	dev.off()
   }
-  
+
 main <- function(args)
 {
   if (length(args) > 0)
@@ -79,7 +81,6 @@ main <- function(args)
   }
   
 }
-
 
 main(commandArgs(T))
 

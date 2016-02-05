@@ -1,16 +1,18 @@
 #!/usr/bin/Rscript
-library("GenomicRanges")
-library("BSgenome.Hsapiens.UCSC.hg38")
-library(Biostrings)
-library(org.Hs.eg.db)
-library(TxDb.Hsapiens.UCSC.hg38.knownGene)
 
-showUsageInformation <- function()
-{
+
+library(Biostrings)
+library(BSgenome.Hsapiens.UCSC.hg38)
+library(GenomicRanges)
+library(TxDb.Hsapiens.UCSC.hg38.knownGene)
+library(org.Hs.eg.db)
+
+
+showUsageInformation <- function(){
   print("") 
   print("Genereert een barplot voor de hydrofobiciteit van de 10 beste")
   print("medegereguleerde genen. De aminozuren worden verdeeld in")
-  print("de categorieën: hydrofoob, hydrofiel en neutraal.")
+  print("de categorieen: hydrofoob, hydrofiel en neutraal.")
   print("Het script kan aangeroepen worden door Hydrofobiciteit.R")
   print("")
   quit()
@@ -30,14 +32,13 @@ PreferenceRatio <- function(){
   # Alle exons van de genen worden geladen,
   # hiervan wordt de sequentie geladen
   # De sequenties worden getransleerd naar AA sequenties
-  exons <- exonsBy(txdb, by="gene")[Protein.data]
+  exons <- exonsBy(txdb, by="gene")[vctProtein.data]
   protein.dna <- getSeq(genome, exons)
   Protein.AA <- translate(unlist(protein.dna))
 
   #De hydrofobiciteit wordt geteld en de barplot wordt gegenereerd
   dfAmounts <- getRatios(Protein.AA)
   generateBarplot(Protein.AA, dfAmounts)
-
 }
 
 getEntrez <- function(vctGenes){
@@ -48,12 +49,10 @@ getEntrez <- function(vctGenes){
   return(vctEntrez)
 }
 
-
 getRatios <- function(AAStringSet){
   #Een set van unieke ID's wordt gegenereerd en een lege matrix wordt gemaakt
   IDs.Unique <- unique(names(AAStringSet))
   dfAmounts <- matrix(ncol=3)
-  
   #Voor ieder ID in de unieke ID list wordt een set van eiwitsequenties
   #gemaakt, horend bij dat ID.
   #Ieder aminozuur wordt geteld. De set van hydrofobische AA's wordt geteld
@@ -110,9 +109,7 @@ main <- function(args)
       PreferenceRatio()
     }
   }
-  
 }
-
 
 main(commandArgs(T))
 

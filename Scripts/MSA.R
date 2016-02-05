@@ -1,11 +1,14 @@
 #!/usr/bin/Rscript
-library("msa")
-library("GenomicRanges")
-library("BSgenome.Hsapiens.UCSC.hg38")
+
+
 library(Biostrings)
+library("BSgenome.Hsapiens.UCSC.hg38")
+library("GenomicRanges")
+library(KEGGREST)
+library("msa")
 library(org.Hs.eg.db)
 library(TxDb.Hsapiens.UCSC.hg38.knownGene)
-library(KEGGREST)
+
 
 showUsageInformation <- function()
 {
@@ -34,11 +37,15 @@ MSA <- function(){
   sequences <- DNAStringSetList()
   vctWidths <- c()
   for(x in seq(1,length(fctMsaData))){
-    gene.info <- keggGet(paste("hsa:",fctMsaData[[x]], sep=""))
-    sequences[[x]] <- gene.info[[1]]$NTSEQ
-    vctWidths[[x]] <- width(gene.info[[1]]$NTSEQ)
+    tryCatch({
+      gene.info <- keggGet(paste("hsa:",fctMsaData[[x]], sep=""))
+      sequences[[x]] <- gene.info[[1]]$NTSEQ
+      vctWidths[[x]] <- width(gene.info[[1]]$NTSEQ)},
+      error = function(err){
+        print("ID not found")
+      })
+   
   }
-
   # De alignment wordt uitgevoerd
   alignment <- msa(unlist(sequences))
 
@@ -91,8 +98,6 @@ getConservedPercentage <- function(longest.gene, alignment){
   return(percentage)
 }
 
-
-
 main <- function(args)
 {
   if (length(args) > 0)
@@ -107,9 +112,7 @@ main <- function(args)
       MSA()
     }
   }
-  
 }
-
 
 main(commandArgs(T))
 
