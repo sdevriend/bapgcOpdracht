@@ -74,7 +74,7 @@ cp ${TempDir}/tree.png .
 cp ${TempDir}/VennDiagram.png .
 cp ${TempDir}/FoundMotifs.csv .
 # Run latex script
-
+./generatePDF.sh Jessens s1094855 dikkememmem
 mv Hydrofobiciteit.png ${ResultDir}
 mv IntronsExons.png ${ResultDir}
 mv MSARESULT.txt ${ResultDir}
@@ -82,3 +82,4 @@ mv Pathway.png ${ResultDir}
 mv tree.png ${ResultDir}
 mv VennDiagram.png ${ResultDir}
 mv FoundMotifs.csv ${ResultDir}
+mv output.pdf ${ResultDir}/Verslag.pdf
