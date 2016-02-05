@@ -32,8 +32,8 @@ then
 fi
 
 # Opties voor pathways.
-# Pathways Jesse: hsa04722 hsa00980 hsa04920 hsa00360
-opties="hsa04916 hsa00500 hsa00480" # Vul hier je pathways in.
+# Pathways Jesse: hsa04722 hsa00980 hsa04920 hsa00360 | hsa00480
+opties="hsa04916 hsa00500 hsa04920" # Vul hier je pathways in.
 echo "Welke pathway wil je analyseren?"
 select optie in ${opties}
 	do
@@ -61,8 +61,8 @@ select ant in ${boolJN}
 	fi	
     done
 # Declaratie folder bestanden
-outdir="$(pwd | awk '{ print $0 "/outputfiles"}')"${PW}
-tempdir="$(pwd | awk '{ print $0 "/temp"}')"${PW}
+outdir="$(pwd | awk '{ print $0 "/outputfiles"}')"${boolPW}
+tempdir="$(pwd | awk '{ print $0 "/temp"}')"${boolPW}
 #create new directories
 mkdir ${outdir}
 mkdir ${tempdir}
