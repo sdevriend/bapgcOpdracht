@@ -91,7 +91,7 @@ getEntrez <- function(dfGenes){
   #De functie splitst de ID's op een punt en de unieke lijst
   #Wordt teruggegeven
   vctEntrez <- unlist(strsplit(as.character(dfGenes), '\\.'))
-  vctEntrez <- unique(entrez)
+  vctEntrez <- unique(vctEntrez)
   return(vctEntrez)
 }
 
@@ -130,8 +130,8 @@ getGenesforPhylo <- function(){
   
   #Iedere sequentie wordt weggeschreven naar een fasta bestand.
   for(i in seq(1, length(sequences))){
-  outname = paste(nameset[[i]],".fasta", sep="")
-  write.fasta(unlist(sequences)[[i]], names = nameset[[i]], file.out = outname)
+  outname = paste(vctNameset[[i]],".fasta", sep="")
+  write.fasta(unlist(sequences)[[i]], names = vctNameset[[i]], file.out = outname)
   }
 }
 
