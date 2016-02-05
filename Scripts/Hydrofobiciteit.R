@@ -5,6 +5,16 @@ library(Biostrings)
 library(org.Hs.eg.db)
 library(TxDb.Hsapiens.UCSC.hg38.knownGene)
 
+showUsageInformation <- function()
+{
+  print("") 
+  print("Genereert een barplot voor de hydrofobiciteit van de 10 beste")
+  print("medegereguleerde genen. De aminozuren worden verdeeld in")
+  print("de categorieën: hydrofoob, hydrofiel en neutraal.")
+  print("Het script kan aangeroepen worden door Hydrofobiciteit.R")
+  print("")
+  quit()
+}
 
 PreferenceRatio <- function(){
   #Gene database en genoom worden gedefinieerd
@@ -105,3 +115,12 @@ main <- function(args)
 
 
 main(commandArgs(T))
+
+# Additional information:
+# =======================
+# Dit script is geschreven door Jesse Kerkvliet en
+# kan gebruikt worden bij de opdracht van bapgc door
+# Sebastiaan de Vriend.
+#
+# Een barplot van de hydrofobiciteit van de beste 10 medegereguleerde 
+# genen wordt gegenereerd en opgeslagen in een afbeelding.
