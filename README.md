@@ -1,6 +1,6 @@
 # bapgcOpdracht
 Code voor de bapgc opdracht
-Let op. De eerste paar keer bioclite en R runnen is gewoon puur aids.
+Let op. De eerste paar keer bioclite en R runnen kan problemen meebrengen, maar moet wel gedaan worden.
 
 Run deze commando's om een library te updaten die R gebruikt.
 sudo apt-get update
